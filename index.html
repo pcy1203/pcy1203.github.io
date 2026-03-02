@@ -1,227 +1,1187 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-gov.min.css" />
-    <title>[차세대 HR 아카데미] 나의 인재 유형은?</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chanyoung Park</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f0f4f8;--nav-bg:rgba(240,244,248,0.94);--card-bg:#ffffff;
+  --border:#ccd6e4;--grid:rgba(0,52,88,0.032);
+  --accent:#003458;--accent-mid:#0055a5;--accent-lt:#e4eef8;
+  --text-1:#0a1a2e;--text-2:#3a5068;--text-3:#7a99b8;
+  --dot:#003458;--shadow:0 2px 10px rgba(0,52,88,0.10);
+  --shadow-lg:0 8px 32px rgba(0,52,88,0.16);--grid-sz:40px;--sh-line:#003458;
+  --ling-bg:#fff3cd;--ling-tx:#7a5500;--cse-bg:#ffe0cc;--cse-tx:#7a2e00;
+  --edu-bg:#d4f5e3;--edu-tx:#005a28;--free-bg:#cce4ff;--free-tx:#003a88;
+  --gyo-bg:#e8d4ff;--gyo-tx:#4a007a;
+}
+[data-theme="dark"]{
+  --bg:#0b1623;--nav-bg:rgba(11,22,35,0.96);--card-bg:#132030;
+  --border:#1c3050;--grid:rgba(80,160,255,0.025);
+  --accent:#4da8ff;--accent-mid:#6ab8ff;--accent-lt:#0c1e30;
+  --text-1:#ddeeff;--text-2:#6a96b8;--text-3:#3a5a78;
+  --dot:#4da8ff;--shadow:0 2px 10px rgba(0,0,0,0.4);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.5);--sh-line:#4da8ff;
+  --ling-bg:#3a2e00;--ling-tx:#ffd966;--cse-bg:#3a1800;--cse-tx:#ffaa66;
+  --edu-bg:#003320;--edu-tx:#55ddaa;--free-bg:#001a3a;--free-tx:#66aaff;
+  --gyo-bg:#1e0a3a;--gyo-tx:#cc88ff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text-1);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;font-size:15px;line-height:1.65;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:var(--grid-sz) var(--grid-sz);pointer-events:none;z-index:0;}
+
+/* BUBBLES */
+#bubbles{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden;}
+.bubble{position:absolute;border-radius:50%;cursor:pointer;pointer-events:all;z-index:100;background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.72) 0%,rgba(255,220,240,.22) 25%,rgba(160,200,255,.14) 55%,rgba(200,160,255,.10) 75%,transparent 100%),radial-gradient(circle at 70% 75%,rgba(255,180,220,.18) 0%,rgba(140,200,255,.12) 40%,transparent 70%);border:1px solid transparent;background-clip:padding-box;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),inset -2px -3px 6px rgba(200,140,255,.18),inset 2px 3px 8px rgba(255,255,255,.35),0 0 0 .5px rgba(180,220,255,.25);animation:floatUp linear infinite;transition:transform .12s ease;}
+[data-theme="dark"] .bubble{background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.12) 0%,rgba(140,180,255,.06) 40%,transparent 100%),radial-gradient(circle at 70% 75%,rgba(100,140,255,.05) 0%,transparent 60%);box-shadow:inset 0 0 0 1px rgba(100,150,255,.18),0 0 0 .5px rgba(100,150,255,.10);opacity:.5;}
+.bubble::after{content:'';position:absolute;width:30%;height:20%;top:18%;left:22%;background:rgba(255,255,255,.65);border-radius:50%;filter:blur(3px);transform:rotate(-30deg);}
+[data-theme="dark"] .bubble::after{background:rgba(150,180,255,.25);}
+.bubble.popping{animation:popBurst .3s ease-out forwards !important;pointer-events:none;}
+@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:0}8%{opacity:.85}88%{opacity:.7}100%{transform:translateY(-108vh) scale(1.05) rotate(4deg);opacity:0}}
+@keyframes popBurst{0%{transform:scale(1);opacity:.85;filter:blur(0px);}30%{transform:scale(1.45);opacity:.6;filter:blur(1px);}65%{transform:scale(1.7);opacity:.25;filter:blur(3px);}100%{transform:scale(2.0);opacity:0;filter:blur(6px);}}
+.pop-particle{position:absolute;border-radius:50%;pointer-events:none;animation:dropletFly .5s ease-out forwards;}
+@keyframes dropletFly{0%{opacity:.8;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 48px;gap:4px;transition:background .3s,border-color .3s;}
+.nav-logo{margin-right:auto;font-weight:800;font-size:1.05rem;color:var(--accent);letter-spacing:-.02em;white-space:nowrap;}
+.tab-btn{background:none;border:none;cursor:pointer;font-family:'Pretendard',sans-serif;font-size:.9rem;font-weight:600;color:var(--text-3);padding:7px 17px;border-radius:6px;position:relative;transition:color .2s;white-space:nowrap;}
+.tab-btn::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:0;height:2.5px;background:var(--accent);border-radius:2px;transition:width .25s cubic-bezier(.4,0,.2,1);}
+.tab-btn.active{color:var(--text-1);}
+.tab-btn.active::after{width:60%;}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;padding:4px 14px;font-size:.79rem;color:var(--text-2);margin-left:12px;font-family:'Pretendard',sans-serif;font-weight:600;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* MAIN */
+main{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:92px 44px 80px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEADING */
+.section-block{margin-bottom:52px;}
+.section-heading{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+.section-heading h2{font-size:1.08rem;font-weight:800;color:var(--text-1);letter-spacing:-.01em;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+.section-heading::after{content:'';flex:1;height:1.5px;background:var(--border);border-radius:2px;}
+
+/* SHARED */
+.tag{display:inline-block;background:var(--accent-lt);color:var(--accent);padding:3px 10px;border-radius:20px;font-size:.76rem;font-weight:600;}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+.filter-btn{background:var(--card-bg);border:1.5px solid var(--border);border-radius:20px;cursor:pointer;padding:5px 17px;font-size:.83rem;font-weight:600;color:var(--text-2);font-family:'Pretendard',sans-serif;transition:all .18s;}
+.filter-btn.active,.filter-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:350px 1fr;gap:44px;align-items:center;margin-bottom:52px;}
+.profile-card{background:var(--card-bg);border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);position:sticky;top:80px;}
+.profile-photo{width:100%;aspect-ratio:4/5;background:linear-gradient(160deg,var(--accent-lt) 0%,var(--border) 100%);display:flex;align-items:center;justify-content:center;font-size:5.5rem;}
+.profile-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.profile-meta{padding:20px 18px;}
+.profile-name{font-weight:800;font-size:1.2rem;margin-bottom:2px;}
+.profile-role{font-size:.82rem;color:var(--accent);font-weight:700;margin-bottom:16px;}
+.profile-items{display:flex;flex-direction:column;gap:9px;}
+.pi-row{display:flex;align-items:flex-start;gap:9px;font-size:.82rem;color:var(--text-2);}
+/* compact 2-column grid for short info items */
+.pi-compact-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px 10px;margin-bottom:2px;}
+.pi-compact-grid .pi-row{font-size:.78rem;}
+.pi-icon{font-size:.95rem;flex-shrink:0;margin-top:1px;color:var(--accent);}
+.pi-label{font-weight:700;color:var(--text-3);font-size:.72rem;display:block;margin-bottom:1px;}
+.pi-val{color:var(--text-2);}
+.pi-val a{color:var(--accent);text-decoration:none;font-weight:600;}
+.pi-val a:hover{text-decoration:underline;}
+.profile-updated{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:.73rem;color:var(--text-3);text-align:right;}
+.hero-tagline{font-family:'DM Serif Display',serif;font-size:1.55rem;line-height:1.55;color:var(--text-1);margin-bottom:22px;}
+.about-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;}
+.id-cards{display:flex;flex-direction:column;gap:11px;}
+.id-card{background:var(--card-bg);border:1px solid var(--border);border-left:3.5px solid var(--accent);border-radius:10px;padding:15px 19px;box-shadow:var(--shadow);transition:transform .2s;}
+.id-card:hover{transform:translateX(4px);}
+.id-card-title{font-size:.83rem;font-weight:800;color:var(--accent);margin-bottom:5px;}
+.id-card-body{font-size:.87rem;line-height:1.75;color:var(--text-2);}
+.id-card-body strong{color:var(--text-1);font-weight:700;}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:grid;grid-template-columns:180px auto 1fr;gap:0 18px;align-items:start;padding:16px 0;}
+.tl-date{font-size:.82rem;font-weight:700;color:var(--accent);padding-top:2px;line-height:1.5;}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:6px;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--dot);border:2.5px solid var(--bg);flex-shrink:0;}
+.tl-title{font-size:.93rem;font-weight:700;color:var(--text-1);margin-bottom:3px;line-height:1.4;}
+.tl-sub{font-size:.82rem;color:var(--text-3);line-height:1.5;}
+.tl-work-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.tl-detail-btn{flex-shrink:0;background:none;border:1.5px solid var(--border);border-radius:16px;cursor:pointer;padding:3px 11px;font-size:.75rem;font-weight:600;color:var(--text-3);font-family:'Pretendard',sans-serif;transition:all .18s;white-space:nowrap;margin-top:1px;}
+.tl-detail-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:10px;}
+.skill-item{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:13px 15px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);}
+.skill-icon{font-size:1.25rem;}
+.skill-name{font-size:.85rem;font-weight:700;color:var(--text-1);}
+.skill-level{font-size:.72rem;color:var(--text-3);margin-top:1px;}
+.skill-star{color:#f0a500;font-size:.9rem;margin-left:auto;}
+
+/* AWARDS */
+.award-list{display:flex;flex-direction:column;gap:9px;}
+.award-item{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:13px 17px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;box-shadow:var(--shadow);}
+.award-name{font-size:.9rem;font-weight:700;color:var(--text-1);}
+.award-org{font-size:.78rem;color:var(--text-3);margin-top:2px;}
+.award-date{font-size:.77rem;color:var(--accent);font-weight:700;white-space:nowrap;}
+
+/* CERTIFICATIONS — 2열 그리드 */
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.cert-item{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;box-shadow:var(--shadow);}
+.cert-name{font-size:.86rem;font-weight:700;color:var(--text-1);}
+.cert-org{font-size:.75rem;color:var(--text-3);margin-top:2px;}
+.cert-date{font-size:.75rem;color:var(--accent);font-weight:700;white-space:nowrap;align-self:center;}
+
+/* STUDY — 2열 그리드 */
+.study-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.study-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);}
+.study-card-title{font-size:.9rem;font-weight:700;color:var(--text-1);margin-bottom:4px;}
+.study-card-org{font-size:.78rem;color:var(--text-3);margin-bottom:9px;}
+.study-card-tags{display:flex;flex-wrap:wrap;gap:5px;}
+
+/* MAJOR */
+.major-tabs{display:flex;gap:14px;margin-bottom:30px;flex-wrap:wrap;}
+.major-tab-btn{flex:1;min-width:200px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s,transform .2s;}
+.major-tab-btn:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.major-tab-btn.active{border-color:var(--accent);box-shadow:0 4px 22px rgba(0,52,88,.2);}
+.major-thumb{width:100%;height:110px;display:flex;align-items:flex-end;padding:14px 16px;position:relative;overflow:hidden;transition:filter .3s;}
+.major-tab-btn:not(.active) .major-thumb{filter:brightness(.55) saturate(.7);}
+.major-tab-btn:hover .major-thumb{filter:brightness(.9) saturate(1);}
+.major-tab-btn.active .major-thumb{filter:brightness(1) saturate(1);}
+.major-tab-footer{padding:12px 16px;}
+.major-tab-kr{font-size:.95rem;font-weight:800;color:var(--text-1);letter-spacing:-.01em;}
+.major-thumb-label{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:normal;color:#fff;line-height:1.35;position:relative;z-index:1;text-shadow:0 1px 8px rgba(0,0,0,.55);}
+.mt-ling{background:linear-gradient(135deg,#005b8a 0%,#00345a 100%);}
+.mt-cse{background:linear-gradient(135deg,#1a3f7a 0%,#0a1f4a 100%);}
+.mt-edu{background:linear-gradient(135deg,#1a5c3a 0%,#0a2e1e 100%);}
+.major-panel{display:none;}
+.major-panel.active{display:block;animation:fadeUp .25s ease;}
+
+/* Major inner sub-tabs - removed, all sections shown */
+
+.major-section{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:start;padding:20px 0;border-top:1px solid var(--border);}
+.major-section:first-child{border-top:none;}
+.ms-label{display:block;background:var(--accent);color:#fff;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:7px;white-space:nowrap;text-align:center;margin-top:4px;}
+[data-theme="dark"] .ms-label{color:#ddeeff;}
+.ms-body{font-size:.88rem;line-height:1.82;color:var(--text-2);}
+.ms-body strong{color:var(--text-1);font-weight:700;}
+.major-course-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+.major-course-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.major-course-table th{text-align:left;padding:9px 14px;font-size:.72rem;font-weight:700;color:var(--text-3);letter-spacing:.06em;text-transform:uppercase;border-bottom:2px solid var(--border);background:var(--bg);}
+.major-course-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:middle;}
+.major-course-table tr:last-child td{border-bottom:none;}
+
+/* Major activity cards */
+.major-activity-list{display:flex;flex-direction:column;gap:12px;}
+.major-activity-card{background:var(--card-bg);border:1px solid var(--border);border-left:3.5px solid var(--accent);border-radius:10px;padding:15px 19px;box-shadow:var(--shadow);}
+.mac-title{font-size:.88rem;font-weight:600;color:var(--text-1);margin-bottom:3px;}
+.mac-course{font-size:.78rem;color:var(--accent);font-weight:500;margin-bottom:8px;}
+.mac-desc{font-size:.84rem;line-height:1.75;color:var(--text-2);}
+.mac-desc strong{color:var(--text-1);}
+
+/* PROJECT */
+.project-list{display:flex;flex-direction:column;gap:16px;}
+.project-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:220px 1fr;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;}
+.project-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.project-thumb{display:flex;align-items:center;justify-content:center;min-height:148px;font-size:2.5rem;overflow:hidden;position:relative;}
+.project-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;}
+.project-thumb .thumb-emoji{position:relative;z-index:1;}
+.project-body{padding:22px 26px;}
+.project-title-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.project-title{font-size:1rem;font-weight:800;color:var(--text-1);}
+.project-star-btn{background:none;border:none;cursor:pointer;font-size:.95rem;padding:0 2px;line-height:1;flex-shrink:0;align-self:center;margin-top:0;opacity:.4;transition:opacity .15s,transform .15s;color:#f0a500;}
+.project-star-btn.starred{opacity:1;}
+.project-star-btn:hover{opacity:.8;transform:scale(1.2);}
+.project-desc{font-size:.85rem;line-height:1.78;color:var(--text-2);margin-bottom:13px;}
+.project-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.project-period{font-size:.75rem;color:var(--text-3);margin-left:auto;}
+.project-gh-badge{position:absolute;top:12px;right:12px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);border:1.5px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;text-decoration:none;transition:transform .18s,background .18s,box-shadow .18s;}
+[data-theme="dark"] .project-gh-badge{background:rgba(30,50,80,.85);}
+.project-gh-badge:hover{transform:scale(1.18);background:var(--accent);box-shadow:0 4px 14px rgba(0,52,88,.28);}
+.project-gh-badge:hover .gh-icon{fill:#ffffff;}
+.gh-icon{width:16px;height:16px;fill:var(--text-2);transition:fill .18s;}
+[data-theme="dark"] .gh-icon{fill:var(--text-2);}
+
+/* ENROLLED COURSES */
+.course-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.course-table{width:100%;border-collapse:collapse;font-size:.86rem;}
+.course-table th{text-align:left;padding:11px 14px;font-size:.73rem;font-weight:700;color:var(--text-3);letter-spacing:.07em;text-transform:uppercase;border-bottom:2px solid var(--border);background:var(--bg);}
+.course-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:middle;}
+.course-table tr:last-child td{border-bottom:none;}
+.course-row{cursor:pointer;transition:background .15s;}
+.course-row:hover td{background:var(--accent-lt);}
+.star-badge{color:#f0a500;font-size:1rem;margin-right:4px;}
+.sem-tag{display:inline-block;font-size:.71rem;font-weight:600;background:var(--accent-lt);color:var(--accent);padding:2px 8px;border-radius:12px;}
+.mb{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:12px;white-space:nowrap;}
+.mb-ling{background:var(--ling-bg);color:var(--ling-tx);}
+.mb-cse{background:var(--cse-bg);color:var(--cse-tx);}
+.mb-edu{background:var(--edu-bg);color:var(--edu-tx);}
+.mb-free{background:var(--free-bg);color:var(--free-tx);}
+.mb-gyo{background:var(--gyo-bg);color:var(--gyo-tx);}
+.gpa-bar{margin-top:14px;padding:14px 18px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:6px 28px;align-items:center;justify-content:center;text-align:center;font-size:.85rem;color:var(--text-2);}
+.gpa-bar strong{color:var(--text-1);font-weight:800;}
+.gpa-sep{color:var(--text-3);font-size:1rem;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,20,40,.55);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--card-bg);border:1px solid var(--border);border-radius:18px;box-shadow:0 20px 70px rgba(0,0,0,.25);width:min(720px,92vw);max-height:85vh;display:flex;flex-direction:column;transform:translateY(18px) scale(.97);transition:transform .22s cubic-bezier(.4,0,.2,1);}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-header{padding:22px 26px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;}
+.modal-header-left{flex:1;}
+.modal-title{font-size:1.1rem;font-weight:800;color:var(--text-1);margin-bottom:5px;}
+.modal-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.79rem;color:var(--text-3);}
+.modal-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.modal-link-btn{display:inline-flex;align-items:center;gap:5px;background:var(--accent-lt);color:var(--accent);border:1px solid var(--border);border-radius:20px;padding:4px 13px;font-size:.78rem;font-weight:700;text-decoration:none;transition:all .18s;}
+.modal-link-btn:hover{background:var(--accent);color:#fff;}
+.modal-body-footer{display:flex;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
+.modal-body-footer a{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border-radius:20px;padding:6px 18px;font-size:.8rem;font-weight:700;text-decoration:none;transition:opacity .15s;}
+.modal-body-footer a:hover{opacity:.85;}
+.modal-close{background:none;border:none;cursor:pointer;font-size:1.25rem;color:var(--text-3);line-height:1;padding:2px;transition:color .15s;flex-shrink:0;}
+.modal-close:hover{color:var(--text-1);}
+.modal-body{padding:22px 26px;overflow-y:auto;flex:1;font-size:.88rem;line-height:1.88;color:var(--text-2);}
+.modal-body h3{font-size:.95rem;font-weight:800;color:var(--text-1);margin:16px 0 6px;}
+.modal-body h3:first-child{margin-top:0;}
+.modal-body p{margin-bottom:10px;}
+.modal-body ul{padding-left:18px;margin-bottom:10px;}
+.modal-body li{margin-bottom:4px;}
+.modal-body strong{color:var(--text-1);font-weight:700;}
+.modal-img-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+.modal-img-row img{border-radius:8px;max-width:100%;object-fit:cover;flex:1;min-width:200px;max-height:220px;border:1px solid var(--border);}
+.md-note{background:var(--accent-lt);border-left:3px solid var(--accent);border-radius:7px;padding:11px 14px;font-size:.83rem;color:var(--text-2);margin:12px 0;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:820px){
+  main{padding:70px 16px 60px;}
+  nav{padding:0 12px;gap:2px;}
+  .tab-btn{padding:5px 8px;font-size:.78rem;}
+  .theme-btn{padding:4px 10px;font-size:.74rem;margin-left:6px;}
+
+  /* About profile card narrower on mobile */
+  .about-layout{grid-template-columns:1fr;gap:28px;}
+  .profile-card{position:static;max-width:350px;margin:0 auto;}
+
+  /* Timeline */
+  .tl-item{grid-template-columns:1fr;gap:4px;padding:14px 0;}
+  .tl-date{font-size:.78rem;}
+  .tl-dot-col{display:none;}
+  .tl-work-header{flex-direction:row;gap:10px;align-items:flex-start;}
+  .tl-detail-btn{align-self:flex-start;flex-shrink:0;}
+
+  /* Major tabs */
+  .major-tabs{flex-direction:column;gap:10px;}
+  .major-tab-btn{min-width:unset;}
+  .major-section{grid-template-columns:1fr;gap:9px;}
+  .ms-label{width:fit-content;}
+  .major-subtabs{gap:4px;}
+  .major-subtab-btn{font-size:.78rem;padding:6px 10px;}
+
+  /* Project */
+  .project-card{grid-template-columns:1fr;}
+  .project-thumb{min-height:110px;}
+  .project-body{padding:16px 18px;}
+
+  /* Skills */
+  .skills-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+
+  /* Certs / Study */
+  .cert-grid{grid-template-columns:1fr;}
+  .study-grid{grid-template-columns:1fr;}
+
+  /* Course table scroll */
+  .course-wrap,.major-course-wrap{overflow-x:auto;}
+  .course-table,.major-course-table{min-width:540px;}
+
+  /* Awards */
+  .award-item{grid-template-columns:1fr;gap:4px;}
+  .award-date{text-align:right;}
+
+  /* Modal */
+  .modal{width:96vw;max-height:90vh;border-radius:14px;}
+  .modal-header{padding:16px 18px 12px;}
+  .modal-body{padding:16px 18px;}
+  .modal-img-row img{min-width:140px;max-height:170px;}
+}
+
+@media(max-width:480px){
+  .nav-logo{font-size:.9rem;}
+  .tab-btn{padding:4px 6px;font-size:.72rem;}
+  .theme-btn{display:none;}
+  .hero-tagline{font-size:1.2rem;}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="./logo.png"></img>
+
+<div id="bubbles"></div>
+
+<nav>
+  <div class="nav-logo">Chanyoung Park</div>
+  <button class="tab-btn active" data-tab="about">About</button>
+  <button class="tab-btn" data-tab="major">Major</button>
+  <button class="tab-btn" data-tab="project">Project</button>
+  <button class="tab-btn" data-tab="study">Study</button>
+  <button class="theme-btn" id="themeBtn">🌙 Dark</button>
+</nav>
+
+<main>
+
+<!-- ══════ ABOUT ══════ -->
+<div id="tab-about" class="tab-panel active">
+  <div class="about-layout">
+    <div>
+      <div class="profile-card">
+        <div class="profile-photo"><img src="./image/profile.jpg" alt="Profile Photo"></div>
+        <div class="profile-meta">
+          <div class="profile-name">박찬영</div>
+          <div class="profile-role">Chanyoung Park</div>
+          <div class="profile-items">
+            <div class="pi-compact-grid">
+              <div class="pi-row"><span class="pi-icon">🎂</span><div><span class="pi-label">Birth</span><span class="pi-val">2001. 12. 03.</span></div></div>
+              <div class="pi-row"><span class="pi-icon">✉️</span><div><span class="pi-label">Email</span><span class="pi-val"><a href="mailto:pcy1203@snu.ac.kr">pcy1203@snu.ac.kr</a></span></div></div>
+              <div class="pi-row"><span class="pi-icon">🐙</span><div><span class="pi-label">GitHub</span><span class="pi-val"><a href="https://github.com/pcy1203" target="_blank">github.com/pcy1203</a></span></div></div>
+              <div class="pi-row"><span class="pi-icon">📄</span><div><span class="pi-label">CV</span><span class="pi-val"><a href="https://drive.google.com/file/d/1SFir90TgjXPeg4Ke4ygOWYuJPX5j0ehb/view?usp=sharing" target="_blank">Download CV</a></span></div></div>
             </div>
-            <div class="bar"></div>
-            <div class="bar-progress"></div>
-            <img id="kakao-link-btn" src="./send.png"></img>
+            <div class="pi-row"><span class="pi-icon">🎓</span><div><span class="pi-label">School</span><span class="pi-val">서울대학교 자유전공학부 (언어학 ·<br>컴퓨터공학 · 교육프로그램설계공학 주전공)</span></div></div>
+            <div class="pi-row"><span class="pi-icon">💼</span><div><span class="pi-label">Work</span><span class="pi-val">카이스트 인터랙션 연구실(KIXLAB) 학부생 인턴</span></div></div>
+          </div>
+          <div class="profile-updated">Recently Updated at 2026. 03. 02.</div>
         </div>
-        <div class="page first-page">
-            <div class="title">
-                <img src="./back.png"></img>
-                <p>나의 인재 유형은?</p>
-            </div>
-            <div class="description">
-                <p>나는 어떤 인재 유형인지 확인하고<br />차세대 지원하기!<br /><span style="font-size: 16px; color: #ffe785;">💡 36기 모집 종료 💡</span></p>
-                <button class="start">시작하기</button>
-            </div>
-        </div>
-        <div class="page question-page" style="display: none; top: 30px;">
-            <div class="question">
-                <p>Q. 두근두근 차세대에서의 HR 교육!<br />내가 더 기대하는 세션은?</p>
-            </div>
-            <div class="answers">
-                <button class="answer answer-1">채용, 성과관리, 조직문화 등의 HRM 세션</button>
-                <button class="answer answer-2">교수설계, 교육평가 등의 HRD 세션</button>
-                <button class="answer answer-3" style="display: none;"></button>
-                <button class="result" style="display: none;"></button>
-            </div>
-        </div>
-        
-        <div class="loading-page" style="display: none;">
-            <div class="loading-all">
-                <div class="loading loading-1"></div>
-                <div class="loading loading-2"></div>
-                <div class="loading loading-3"></div>
-                <div class="loading-4">LOADING...</div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <img src="./register.png"></img>
-            <a class="register-1" style="cursor: pointer;"></a>
-            <a class="register-2" href="https://nextgeneration-hr-academy.career.greetinghr.com/o/120735"></a>
-        </div>
+      </div>
     </div>
-    <div class="black-container" style="display: none;">
-        <div class="modal">
-            <div class="modal-wrap">
-                <div class="info">
-                    <a href="https://m.blog.naver.com/next_hr_academy/223524467762"><img src="./info-1.png"></a>
-                    <p><span class="name">차세대 프리뷰</span><br /># 차세대 활동 소개</p>
-                </div>
-                <div class="info">
-                    <a href="https://m.blog.naver.com/next_hr_academy/223528612817"><img src="./info-2.png"></a>
-                    <p><span class="name">차세대 인사이드</span><br /># 수료 OB님 인터뷰</p>
-                </div>
-                <div class="info">
-                    <a href="https://m.blog.naver.com/next_hr_academy/223528697078"><img src="./info-3.png"></a>
-                    <p><span class="name">차세대 모집 공고</span><br /># 36기 모집 절차</p>
-                </div>
-                <div class="info">
-                    <a href="https://m.blog.naver.com/next_hr_academy/223528698309"><img src="./info-4.png"></a>
-                    <p><span class="name">모집 설명회</span><br /># 실시간 질의응답</p>
-                </div>
-            </div>
-            <p class="modal-desc">이외에도 블로그에서 운영진 인터뷰,<br />인스타그램에서 활동 후기를<br />확인할 수 있어요!</p>
-            <a class="sns-link sns-1" href="https://m.blog.naver.com/next_hr_academy"></a>
-            <a class="sns-link sns-2" href="https://cafe.naver.com/no1hr"></a>
-            <a class="sns-link sns-3" href="https://pf.kakao.com/_ExgmIC"></a>
-            <a class="sns-link sns-4" href="https://www.instagram.com/next_hr_academy/"></a>
-            <img class="sns" src="./info-sns.png">
-            <button class="close">닫기</button>
-        </div>
+    <div class="about-right">
+      <div class="hero-tagline">사람들이 자신의 <strong>꿈과 역량</strong>을 펼칠 수 있도록,<br><strong>다양한 관점</strong>에서 <strong>더 나은 경험</strong>을 설계합니다.</div>
+      <div class="about-tags">
+        <span class="tag"># Human-Computer Interaction</span>
+        <span class="tag"># Human Resource Development</span>
+        <span class="tag"># Learning Experience</span>
+        <span class="tag"># Instructional Design</span>
+        <span class="tag"># Natural Language Processing</span>
+        <span class="tag"># Psycholinguistics</span>
+      </div>
+      <div class="id-cards">
+        <div class="id-card"><div class="id-card-title"># eXperience Design</div><div class="id-card-body"><strong>사용자 경험(UX), 학습 경험(LX), 직원 경험(EX)</strong><br/>─ 사람들의 <strong>요구를 분석</strong>하여 <strong>더 나은 경험</strong>을 제공하기 위해 고민합니다.</div></div>
+        <div class="id-card"><div class="id-card-title"># 3전공 · 다양한 관점</div><div class="id-card-body"><strong>인간컴퓨터상호작용(HCI), 인적자원관리/개발(HR)</strong><br/>─ 분야 간 경계를 넘어 <strong>다양한 관점</strong>을 탐구하고 공유하는 일을 좋아합니다.</div></div>
+        <div class="id-card"><div class="id-card-title"># 꿈 · 성장</div><div class="id-card-body">사람들이 자신의 <strong>꿈</strong>을 향해 나아갈 수 있도록,<br/><strong>성장</strong>을 지원하며 소통하는 일을 하고 싶습니다.</div></div>
+      </div>
     </div>
-</body>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  </div>
+
+  <div class="section-block">
+    <div class="section-heading"><h2>📖 Education &amp; Military</h2></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-date">2020. 03. ~</div><div class="tl-dot-col"><div class="tl-dot"></div></div><div class="tl-content"><div class="tl-title">서울대학교 자유전공학부 20학번 재학 중</div><div class="tl-sub">언어학 · 컴퓨터공학 · 교육프로그램설계공학 주전공</div></div></div>
+      <div class="tl-item"><div class="tl-date">2022. 03. ~ 2023. 12.</div><div class="tl-dot-col"><div class="tl-dot"></div></div><div class="tl-content"><div class="tl-title">대한민국 공군 兵 836기 만기전역</div></div></div>
+      <div class="tl-item"><div class="tl-date">2017. 03. ~ 2020. 02.</div><div class="tl-dot-col"><div class="tl-dot"></div></div><div class="tl-content"><div class="tl-title">안양외국어고등학교 중국어과 졸업</div></div></div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-heading"><h2>🏃 Work &amp; Activities</h2></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2026. 01. ~</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">카이스트 인터랙션 연구실(KIXLAB) 학부생 연구 인턴</div>
+              <div class="tl-sub">AI Tutor Evaluation 프로젝트 연구(NLP)<br/>HCI-Edu 스터디</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="카이스트 인터랙션 연구실(KIXLAB) 학부생 연구 인턴"
+              data-meta="📅 2026. 01. ~ | 💼 카이스트 인터랙션 연구실(KIXLAB)"
+              data-detail="<h3>활동 내용</h3><ul><li>AI Tutor Evaluation 프로젝트 연구 (NLP 기반 평가 파이프라인 설계)</li><li>LLM 기반 Intervention Detection 및 Scoring 연구</li><li>HCI-Edu 스터디 참여</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025. 06. ~ 2025. 12.</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">카카오뱅크 People팀 인재영입 어시스턴트</div>
+              <div class="tl-sub">채용 프로세스 관리 및 지원자 · 평가자 커뮤니케이션<br/>면접관 데이터 분석, 입사자 인터뷰 및 VoE 분석<br/>채용 콘텐츠 제작 및 행사 운영 지원</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="카카오뱅크 People팀 인재영입 어시스턴트"
+              data-meta="📅 2025. 06. ~ 2025. 12. | 💼 카카오뱅크"
+              data-detail="<h3>역할 및 업무</h3><ul><li>채용 프로세스 관리 및 지원자·평가자 커뮤니케이션</li><li>면접관 데이터 분석, 입사자 인터뷰 및 VoE 분석 (면접 및 채용 경험 향상)</li><li>채용 콘텐츠 제작 및 채용 박람회 행사 운영 지원</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2025. 03. ~ 2025. 08.</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">프로메테우스 7기</div>
+              <div class="tl-sub">인공지능 개발 동아리 활동<br/>가정용 심전도 헬스케어 AI 서비스 '콩콩' 프로젝트 (AI 개발)<br/>딥러닝 Pytorch 스터디</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="프로메테우스 7기"
+              data-meta="📅 2025. 03. ~ 2025. 08."
+              data-detail="<h3>활동 내용</h3><ul><li>딥러닝 PyTorch 스터디</li><li>의료 진단 및 질의응답 AI 개발 프로젝트</li><li>자연어 데이터 기반 RAG 시스템 구현</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2024. 02. ~ 2024. 12.</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">차세대 HR 아카데미 35기 인재개발팀장</div>
+              <div class="tl-sub">HR 교육 프로그램 기획 및 진행<br/>HRM/HRD 솔루션 제안 프로젝트<br/>학회 대내외 홍보 콘텐츠 제작 및 채용 진행</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="차세대 HR 아카데미 35기 인재개발팀장"
+              data-meta="📅 2024. 02. ~ 2024. 12."
+              data-detail="<h3>활동 내용</h3><ul><li>학회 교육 프로그램 기획 및 운영</li><li>학회 대내외 홍보 콘텐츠 제작 및 채용 진행</li><li>기업 분석 및 HRM/HRD 솔루션 제안 프로젝트 수행</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2024. 07. ~ 2024. 08.</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">서울대학교 학습과학연구소 인턴십</div>
+              <div class="tl-sub">학습과학 스터디<br/>AI융합교육 주제 연구</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="서울대학교 학습과학연구소 인턴십"
+              data-meta="📅 2024. 07. ~ 2024. 08."
+              data-detail="<h3>활동 내용</h3><ul><li>학습과학 관련 논문 스터디</li><li>AI융합교육 주제 연구</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2021. 12. ~ 2022. 02.</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">피로그래밍 16기</div>
+              <div class="tl-sub">웹 개발 동아리 활동 (Python, Django, HHTML/CSS/JavaScript, Git)<br/>어린이를 위한 블록코딩 질의응답 웹 사이트 '도와줘, 코딩' 프로젝트 (백엔드 개발)</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="피로그래밍 16기"
+              data-meta="📅 2021. 12. ~ 2022. 02."
+              data-detail="<h3>활동 내용</h3><ul><li>어린이를 위한 블록코딩 질의응답 웹사이트 제작</li><li>기획 및 백엔드 개발 담당</li><li>Python, Django 기반 개발</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2021. 09. ~ 2022. 02.</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-work-header">
+            <div>
+              <div class="tl-title">꿈을꾸물 교육팀장 &amp; 멘토</div>
+              <div class="tl-sub">고등학생 대상 진로 수업 기획 및 진행<br/>대학생 멘토 워크샵 기획 및 진행<br/>수업 자료 아카이빙 및 개선</div>
+            </div>
+            <!-- <button class="tl-detail-btn"
+              data-title="꿈을꾸물 교육팀장 & 멘토"
+              data-meta="📅 2021. 09. ~ 2022. 02."
+              data-detail="<h3>활동 내용</h3><ul><li>고등학생 대상 진로 수업 기획 및 운영</li><li>대학생 멘토 워크샵 기획 및 진행</li><li>멘토 수업 자료 아카이빙 및 개선</li></ul>">자세히 보기 ↗</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-heading"><h2>🧩 Tech Skills</h2></div>
+    <div class="skills-grid">
+      <div class="skill-item"><span class="skill-icon">💻</span><div><div class="skill-name">Language</div><div class="skill-level">Python · JavaScript · Java</div></div><span class="skill-star">★</span></div>
+      <div class="skill-item"><span class="skill-icon">🎨</span><div><div class="skill-name">Front-End</div><div class="skill-level">HTML/CSS · JavaScript · React · Figma</div></div><span class="skill-star">★</span></div>
+      <div class="skill-item"><span class="skill-icon">⚙️</span><div><div class="skill-name">Back-End</div><div class="skill-level">Node.js (Express) · FastAPI · Django</div></div><span class="skill-star">★</span></div>
+      <div class="skill-item"><span class="skill-icon">🤖</span><div><div class="skill-name">AI (ML &amp; DL)</div><div class="skill-level">Pytorch · LangChain</div></div></div>
+      <div class="skill-item"><span class="skill-icon">🎮</span><div><div class="skill-name">Game &amp; VR</div><div class="skill-level">Unity</div></div></div>
+      <div class="skill-item"><span class="skill-icon">📊</span><div><div class="skill-name">DevOps &amp; DataBase</div><div class="skill-level">AWS · MySQL · MongoDB</div></div></div>
+      <div class="skill-item"><span class="skill-icon">📝</span><div><div class="skill-name">Collaboration</div><div class="skill-level">Git · Github · Notion · Slack</div></div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════ MAJOR ══════ -->
+<div id="tab-major" class="tab-panel">
+  <div class="major-tabs">
+    <button class="major-tab-btn active" data-major="linguistics"><div class="major-thumb mt-ling"><div class="major-thumb-label">Linguistics</div></div><div class="major-tab-footer"><span class="major-tab-kr">언어학</span></div></button>
+    <button class="major-tab-btn" data-major="cse"><div class="major-thumb mt-cse"><div class="major-thumb-label">Computer Science &amp; Engineering</div></div><div class="major-tab-footer"><span class="major-tab-kr">컴퓨터공학</span></div></button>
+    <button class="major-tab-btn" data-major="epdt"><div class="major-thumb mt-edu"><div class="major-thumb-label">Educational Program Design &amp; Technology</div></div><div class="major-tab-footer"><span class="major-tab-kr">교육프로그램설계공학 (학생설계전공)</span></div></button>
+  </div>
+
+  <!-- LINGUISTICS panel -->
+  <div id="major-linguistics" class="major-panel active">
+    <div class="major-section" style="border-top:none;"><span class="ms-label">전공 소개</span><div class="ms-body">
+      "인간의 언어는 어떻게 이루어져 있을까?"<br/><br/>
+      언어학은 인간만이 지닌 <strong>언어 능력의 구조와 원리</strong>를 탐구하는 학문입니다.<br/>
+      인간을 이해하려는 인문학적 문제 의식에서 출발하지만, 자료를 분석하고 가설을 검증하는 <strong>자연과학적 방법론</strong>에 기반하여 연구를 수행합니다.<br/><br/>
+      <strong>이론언어학(음성학, 음운론, 형태론, 통사론, 의미론, 화용론)</strong>은 다양한 층위에서 언어의 형식적 구조를 밝히고,<br/>
+      <strong>역사비교언어학</strong>은 언어의 변화와 계통을, <strong>컴퓨터언어학</strong>은 언어를 계산 가능한 모델로 구조화하는 방식을 다루며,<br/>
+      심리언어학과 사회언어학은 언어가 인간의 인지 과정과 사회적 맥락 속에서 어떻게 작동하는지를 탐구합니다.
+    </div></div>
+    <div class="major-section"><span class="ms-label">관심 분야</span><div class="ms-body">
+      <strong>통사론</strong>(Syntax) ─ 문장의 구조와 구성 원리<br/>
+      <strong>언어 치료</strong>(Language Therapy) ─ 언어 발달 및 의사소통의 어려움 진단 및 중재<br/>
+      <strong>심리언어학</strong>(Psycholinguistics) ─ 언어 이해와 산출의 인지적 처리 과정<br/>
+      <strong>언어습득</strong>(Language Acquisition) ─ 아동기 언어 발달과 문법 체계 형성 과정
+    </div></div>
+    <div class="major-section"><span class="ms-label">수강 과목</span><div class="ms-body"><div class="major-course-wrap"><table class="major-course-table" id="mct-ling"></table></div></div></div>
+    <div class="major-section"><span class="ms-label">교과 활동</span><div class="ms-body">
+      <div class="major-activity-list">
+        <div class="major-activity-card">
+          <div class="mac-title">🔎 An Analysis of Two Types of the Chinese Ba Construction</div>
+          <div class="mac-desc"><strong>심화통사론</strong> | 25-1학기</div>
+        </div>
+        <div class="major-activity-card">
+          <div class="mac-title">💭 Does the activation level of object change when negation is applied to the verb?</div>
+          <div class="mac-desc"><strong>심리언어학</strong> | 25-1학기</div>
+        </div>
+        <div class="major-activity-card">
+          <div class="mac-title">🏝️ Wh-island effect on semantic interpretation in Korean</div>
+          <div class="mac-desc"><strong>실험언어학</strong> | 24-2학기</div>
+        </div>
+        <div class="major-activity-card">
+          <div class="mac-title">🎤 Morpho-semantic Awareness of Korean Voice: Focusing on Reflexive and Potential Passive Verbs</div>
+          <div class="mac-desc"><strong>형태론</strong> | 24-1학기</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- CSE panel -->
+  <div id="major-cse" class="major-panel">
+    <div class="major-section" style="border-top:none;"><span class="ms-label">전공 소개</span><div class="ms-body">
+      "컴퓨터는 어떻게 복잡한 문제를 효율적으로 풀어낼 수 있을까?"<br/><br/>
+      컴퓨터공학은 <strong>정보를 표현하고 처리하는 원리</strong>를 탐구하는 학문입니다.<br/>
+      수학적 추상화와 논리적 추론을 바탕으로 문제를 모델링하고, 이를 <strong>실제로 동작하는 시스템으로 구현하는 과정</strong>을 다룹니다.<br/><br/>
+      <strong>컴퓨터구조, 시스템프로그래밍, 운영체제</strong>는 계산 장치의 구조와 자원 관리 원리를 최적화하는 방법을 탐구하고,<br/>
+      <strong>이산수학, 자료구조, 알고리즘</strong>은 효율적인 정보 표현과 처리 체계를 설계하는 기반이 됩니다.<br/>
+      이러한 기반 위에서 지능형 시스템과 대규모 네트워크 환경까지 확장하여, 현실의 복잡한 문제를 <strong>공학적으로 해결</strong>합니다.
+    </div></div>
+    <div class="major-section"><span class="ms-label">관심 분야</span><div class="ms-body">
+      <strong>인간-컴퓨터 상호작용</strong>(Human-Computer Interaction) ─ 사용자와 시스템 사이의 상호작용 구조 설계<br/>
+      <strong>자연어 처리</strong>(Natural Language Processing) ─ 인간 언어의 계산적 모델링과 처리<br/>
+      <strong>데이터 마이닝</strong>(Data Mining) ─ 대량의 데이터에서 유의미한 정보와 패턴을 추출<br/>
+      <strong>모바일 컴퓨팅</strong>(Mobile Computing) ─ 모바일 기기에서의 소프트웨어 개발 및 네트워크 통신
+    </div></div>
+    <div class="major-section"><span class="ms-label">수강 과목</span><div class="ms-body"><div class="major-course-wrap"><table class="major-course-table" id="mct-cse"></table></div></div></div>
+    <div class="major-section"><span class="ms-label">교과 활동</span><div class="ms-body">
+      <div class="major-activity-list">
+        <div class="major-activity-card">
+          <div class="mac-title">🎮 엔지니오링: 서울대학교 자하연에서 출발한 오리의 공과대학 302동까지의 여정, 3D Auto-Runner 게임</div>
+          <div class="mac-desc"><strong>소프트웨어 개발의 원리와 실습</strong> | 24-2학기</div>
+        </div>
+        <div class="major-activity-card">
+          <div class="mac-title">🥽 집중하샤: 집중력 향상을 위한 VR 애플리케이션</div>
+          <div class="mac-desc"><strong>VR/AR의 개론 및 실습</strong> | 24-2학기</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- EPDT panel -->
+  <div id="major-epdt" class="major-panel">
+    <div class="major-section" style="border-top:none;"><span class="ms-label">전공 소개</span><div class="ms-body">
+      "학습자의 성장을 이끌어내는 교육 프로그램을 어떻게 설계할 수 있을까?"<br/><br/>
+      교육프로그램설계공학은 학습자의 요구와 특성을 분석하고, 과학적 지식과 테크놀로지를 활용하여 <strong>효과적인 교육 프로그램을 설계하는 학문</strong>입니다.<br/>
+      이는 <strong>학생설계전공(Student-designed Major)</strong>으로, 학생이 직접 교육과정을 설계하여 학교의 승인을 받은 후 이수하는 전공 과정입니다.<br/><br/>
+      <strong>교육 프로그램 설계</strong> 교과목군(교육학 · 산업인력개발학)은 학습자를 위한 교육 프로그램을 체계적으로 설계하는 방법을 탐구하며,<br/>
+      <strong>학습과 인지과정</strong> 교과목군(교육학 · 심리학)은 학습의 원리와 학습자의 특성을 이해하고 학습 효과를 극대화하는 전략을 다룹니다.<br/>
+      또한 <strong>테크놀로지</strong> 교과목군(컴퓨터공학 · 정보문화학)은 실제 교육 프로그램에 기술을 적절히 적용하는 방식을 연구합니다.
+    </div></div>
+    <div class="major-section"><span class="ms-label">관심 분야</span><div class="ms-body">
+      <strong>인적자원개발</strong>(Human Resource Development) ─ 조직과 개인의 역량을 체계적으로 개발 · 관리<br/>
+      <strong>교수설계</strong>(Instructional Design) ─ 학습자의 요구와 특성을 분석하여 효과적인 교육 프로그램과 수업 방식 설계<br/>
+      <strong>학습과학</strong>(Learning Sciences) ─ 학습의 원리, 학습자의 인지 과정과 학습 전략에 대한 이해<br/>
+      <strong>교육평가</strong>(Educational Assessment) ─ 교육 프로그램과 교수설계의 효과를 분석
+    </div></div>
+    <div class="major-section"><span class="ms-label">수강 과목</span><div class="ms-body"><div class="major-course-wrap"><table class="major-course-table" id="mct-edu"></table></div></div></div>
+    <div class="major-section"><span class="ms-label">교과 활동</span><div class="ms-body">
+      <div class="major-activity-list">
+        <div class="major-activity-card">
+          <div class="mac-title">☕ 대학생의 습관적 고당류 카페 메뉴 섭취로 인한 건강 관리의 어려움</div>
+          <div class="mac-desc"><strong>HCI 이론 및 실습</strong> | 24-1학기</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+
+<!-- ══════ PROJECT ══════ -->
+<div id="tab-project" class="tab-panel">
+  <div class="filter-bar" id="projectFilter">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="hci">HCI &amp; Planning</button>
+    <button class="filter-btn" data-filter="frontend">Tech: FrontEnd</button>
+    <button class="filter-btn" data-filter="backend">Tech: BackEnd</button>
+    <button class="filter-btn" data-filter="ai">Tech: AI</button>
+    <button class="filter-btn" data-filter="game">Game &amp; VR</button>
+    <button class="filter-btn" data-filter="hr">HR &amp; Education</button>
+  </div>
+
+  <div class="project-list" id="projectList">
+
+    <!-- FitConnect -->
+    <div class="project-card"
+      data-cats="hci,frontend,ai"
+      data-title="FitConnect"
+      data-period="2025. 08. ~ 2025. 11."
+      data-team="3인 (PM · FrontEnd · 팀장)"
+      data-stack="React · FastAPI · LangChain · AWS · Git"
+      data-github="https://github.com/pcy1203/fitconnect-frontend"
+      data-detail="<img src='./image/fitconnect.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>💼 반복되는 채용 프로세스, 나에게 딱 맞는(Fit) 공고/인재를 빠른 시간/충분한 정보 속에서 찾을(Connect) 수 없을까?!<br/>└─▶ <strong>구직자 · 기업 AI 인터뷰로 '딱 맞는 매칭'을 제공하는 채용 플랫폼</strong></p><h3>주요 기능</h3><ul><li><strong>AI 인터뷰</strong> : 구직자와 기업이 각각 AI 인터뷰를 진행하여, 지원자의 역량과 기업의 요구사항을 심층적으로 분석</li><li><strong>공고 · 인재 카드</strong> : 구직자와 기업이 각각 공고 및 인재 정보를 직관적으로 확인할 수 있는 카드 기능 제공</li><li><strong>맞춤형 매칭</strong> : AI가 인터뷰 결과를 바탕으로 구직자와 기업 간의 적합도를 계산하여 최적의 매칭을 제안</li></ul><h3>역할</h3><ul><li><strong>PM · 서비스 기획</strong> : 스프린트 회의 진행, 기획서 작성, 발표 자료 제작 및 발표 진행</li><li><strong>디자인 · 프론트엔드 개발</strong> : Figma 프로토타입 제작, React 개발</li><li><strong>AI 코드 리팩토링</strong> : 프롬프트 엔지니어링, LangChain 코드 리팩토링</li></ul><h3>성과</h3><p>2025 DATA VENTURE FLEX 과제 최우수상 &amp; 한국연구재단이사장상</p>">
+      <a class="project-gh-badge" href="https://github.com/pcy1203/fitconnect-frontend" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#5aabff 0%,#ff7a5c 100%);"><span class="thumb-emoji">💼</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">FitConnect</div><button class="project-star-btn starred" title="별표 표시">★</button></div>
+        <div class="project-desc">구직자 · 기업 AI 인터뷰로 '딱 맞는 매칭'을 제공하는 채용 플랫폼</div>
+        <div class="project-meta"><span class="tag">#PM</span><span class="tag">#Planning</span><span class="tag">#FrontEnd</span><span class="tag">#React</span><span class="project-period">2025. 08. ~ 2025. 11.</span></div>
+      </div>
+    </div>
+
+    <!-- 스누지니어스 -->
+    <div class="project-card"
+      data-cats="hci,frontend,ai"
+      data-title="스누지니어스"
+      data-period="2025. 10. ~ 2025. 11."
+      data-team="4인 (Planning · FrontEnd · BackEnd · AI Chatbot)"
+      data-stack="React · FastAPI"
+      data-github="https://github.com/pcy1203/snu-genius"
+      data-detail="<img src='./image/snugenius.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>🏫 흩어져 있는 졸업 규정, 매번 문의해야 하는 졸업 사정··· 졸업의 불확실성을 없애고 행정의 비효율을 혁신하다!<br/>└─▶ <strong>초개인화 졸업사정 및 규정검색 서비스</strong>, 스누지니어스</p><h3>주요 기능</h3><ul><li><strong>규정 질의응답/검색 챗봇</strong> : 질의응답과 함께 관련 규정을 검색하여 제공, 명확하지 않은 규정에 대해서는 문의 메일을 자동으로 작성할 수 있도록 지원</li><li><strong>이수 현황 점검 (졸업 시뮬레이션) 및 수강 계획 추천</strong> : 학생의 이수 현황을 기반으로 졸업 가능 여부를 시뮬레이션하고, 추천 수강 계획을 제안</li><li><strong>졸업 규정 및 FAQ</strong> : 파편화된 졸업 규정을 정리하고, 행정실에 들어온 질문을 기반으로 FAQ를 자동 구성</li></ul><h3>역할</h3><ul><li><strong>기획 및 프로토타입 디자인</strong> : 전체 서비스 기획 및 Figma를 통한 프로토타입 디자인</li><li><strong>프론트엔드 · 백엔드 · AI 챗봇 구현</strong> : React, FastAPI, LLM API 기반 초기 프로토타입 구현</li></ul><h3>성과</h3><p>제1회 서울대학교 생성형 AI 경진대회 최우수상(서울대학교 총장상)</p>">
+      <a class="project-gh-badge" href="https://github.com/pcy1203/snu-genius" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#ffe234 0%,#f7921a 100%);"><span class="thumb-emoji">🏫</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">스누지니어스</div></div>
+        <div class="project-desc">초개인화 졸업사정 및 규정검색 서비스</div>
+        <div class="project-meta"><span class="tag">#Planning</span><span class="tag">#FrontEnd</span><span class="tag">#AI Chatbot</span><span class="tag">#React</span><span class="project-period">2025. 10. ~ 2025. 11.</span></div>
+      </div>
+    </div>
+
+    <!-- 콩콩 -->
+    <div class="project-card"
+      data-cats="ai"
+      data-title="콩콩"
+      data-period="2025. 03. ~ 2025. 08."
+      data-team="5인 (AI Chatbot)"
+      data-stack="React Native · Node.js · LangChain · Git"
+      data-github="https://github.com/pcy1203/kongkong"
+      data-detail="<img src='./image/kongkong.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>❤️ 당신을 위한 심장건강 비서, 콩콩<br/>└─▶ <strong>가정용 심전도 헬스케어 AI 서비스</strong></p><h3>주요 기능</h3><ul><li><strong>의료 질의응답 챗봇</strong> : 의료 문서 기반 응답 생성</li><li><strong>심전도 · 체온 측정 및 진단</strong> : 아두이노를 활용한 심전도 · 체온 측정</li><li><strong>진단 결과 제시 및 병원 추천</strong> : Transformer 모델 기반 진단 결과 제시, 병원 추천 기능</li></ul><h3>역할</h3><ul><li><strong>데이터베이스 구축</strong> : 초거대 AI 헬스케어 질의응답 데이터 활용, 데이터 전처리</li><li><strong>챗봇 개발</strong> : LangChain 개발 (LLM API 호출 및 RAG 구현, 프롬프트 작성), Agentic Flow 구현</li></ul>">
+      <a class="project-gh-badge" href="https://github.com/pcy1203/kongkong" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#ffaa80 0%,#ff4060 100%);"><span class="thumb-emoji">❤️</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">콩콩</div></div>
+        <div class="project-desc">당신을 위한 심장건강 비서, 가정용 심전도 헬스케어 AI 서비스</div>
+        <div class="project-meta"><span class="tag">#AI Chatbot</span><span class="tag">#LangChain</span><span class="tag">#FastAPI</span><span class="project-period">2025. 03. ~ 2025. 08.</span></div>
+      </div>
+    </div>
+
+    <!-- HCI 프로젝트 -->
+    <div class="project-card"
+      data-cats="hci"
+      data-title="HCI 이론 및 실습: 앱 프로토타입"
+      data-period="2024. 03. ~ 2024. 06."
+      data-team="5인 (Planning · Research · User Study · Design)"
+      data-stack="Figma"
+      data-github="https://www.ischive.com/assignment/SQEN55OU2M"
+      data-detail="<img src='./image/hciproject.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>☕ 습관적으로 고당류 카페 메뉴를 섭취하고 있다면?!<br/>└─▶ <strong>대학생의 습관적 고당류 카페 메뉴 섭취로 인한 건강 관리의 어려움</strong></p><h3>주요 기능</h3><ul><li><strong>저당 메뉴 추천</strong> : 카페 방문 시 당 함량 정보 제공, 저당 메뉴 추천</li><li><strong>당 섭취 기록</strong> : 카페 메뉴 촬영 시 캐릭터의 피드백과 함께 자동으로 당 섭취 기록, 주간 목표 설정 및 주간/월간 기록 확인</li><li><strong>캐릭터 꾸미기 및 보상 시스템</strong> : 캐릭터를 꾸미고, 당 섭취 기록에 따라 보상을 제공</li></ul><h3>역할</h3><ul><li><strong>기획 및 유저 스터디</strong> : 전체 서비스 기획, Formative Study와 Usability Test 진행</li><li><strong>프로토타입 제작</strong> : 홈 화면, 당 섭취 기록 기능 담당 (Figma 프로토타입 제작)</li><li><strong>페이퍼 작성 및 포스터 제작</strong></li></ul>">
+      <a class="project-gh-badge" href="https://www.ischive.com/assignment/SQEN55OU2M" target="_blank" rel="noopener" title="링크" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#d9c4b0 0%,#a87355 100%);"><span class="thumb-emoji">☕</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">HCI 이론 및 실습: 앱 프로토타입</div><button class="project-star-btn starred" title="별표 표시">★</button></div>
+        <div class="project-desc">대학생의 습관적 고당류 카페 메뉴 섭취로 인한 건강 관리의 어려움</div>
+        <div class="project-meta"><span class="tag">#Planning</span><span class="tag">#Research</span><span class="tag">#Design</span><span class="project-period">2024. 03. ~ 2024. 06.</span></div>
+      </div>
+    </div>
+
+    <!-- 집중하샤 -->
+    <div class="project-card"
+      data-cats="game"
+      data-title="집중하샤"
+      data-period="2024. 10. ~ 2024. 12."
+      data-team="3인 (Planning · Unity Programming · UI)"
+      data-stack="Unity · C#"
+      data-github="https://github.com/pcy1203/FocuSnu-VR"
+      data-detail="<img src='./image/focusnu.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>🥽 릴스와 쇼츠, 짧은 콘텐츠 중독··· 우리의 집중력은 이대로 괜찮을까?<br/>└─▶ 외부 방해 속에서 주어진 과제를 수행하며 <strong>집중력을 향상시키는 VR 애플리케이션</strong></p><h3>주요 기능</h3><ul><li><strong>과제 수행</strong> : 5가지 종류의 과제(같은 카드 뒤집기, 물건 위치 기억하기, 그림 순서 배열하기, 장애물 피하기, 탁구공 튀기기)</li><li><strong>방해 요소</strong> : 도전적 환경 제공, 더 높은 수준의 집중력 요구</li><li><strong>점수 기록</strong> : 흥미와 집중력 향상을 위한 동기 유발, 집중력 자가진단</li></ul><h3>역할</h3><ul><li><strong>Unity 프로그래밍</strong> : 과제 3 (그림 순서 배열하기), 과제 4 (장애물 피하기), 점수 기록 기능 구현</li><li><strong>UI 디자인</strong> : VR 환경 내 UI 구성 및 사용자 경험 개선</li><li><strong>기획</strong> : 과제 및 방해 요소 기획, 최종 보고서 작성 및 발표</li></ul>">
+      <a class="project-gh-badge" href="https://github.com/pcy1203/FocuSnu-VR" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#7b8ff5 0%,#6a2dcc 100%);"><span class="thumb-emoji">🥽</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">집중하샤</div></div>
+        <div class="project-desc">집중력 향상을 위한 VR 애플리케이션</div>
+        <div class="project-meta"><span class="tag">#Unity</span><span class="tag">#VR</span><span class="project-period">2024. 10. ~ 2024. 12.</span></div>
+      </div>
+    </div>
+
+    <!-- 엔지니오링 -->
+    <div class="project-card"
+      data-cats="game"
+      data-title="엔지니오링"
+      data-period="2024. 09. ~ 2024. 12."
+      data-team="3인 (Unity Programming)"
+      data-stack="Unity · C#"
+      data-github="https://github.com/pcy1203/Engineeoring"
+      data-detail="<img src='./image/engineeoring.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>🎮 자하연을 떠나, 302동에 계신 전설적인 프로그래밍 교수님을 만나러 가자!<br/>└─▶ 서울대학교 자하연에서 출발한 오리의 공과대학 302동까지의 여정을 담은 <strong>3D Auto-Runner 게임</strong></p><h3>역할</h3><ul><li><strong>Unity 프로그래밍</strong> : 기본 오리 움직임 및 아이템 효과 구현, 게임 오버 · 스테이지 전환 · 엔딩 구현</li><li><strong>UI 디자인</strong> : 게임 내 UI 구성 및 사용자 경험 개선, 비주얼 이펙트 디자인 및 구현</li><li><strong>Refactoring</strong> : Strategy Pattern을 활용한 게임 상태 관리, Facade Pattern과 Chain of Responsibility Pattern을 통한 아이템 획득 로직 분리</li></ul>">
+      <a class="project-gh-badge" href="https://github.com/pcy1203/Engineeoring" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#e8e4ff 0%,#bbaee8 100%);"><span class="thumb-emoji">🎮</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">엔지니오링</div></div>
+        <div class="project-desc">서울대학교 자하연에서 출발한 오리의 공과대학 302동까지의 여정, 3D Auto-Runner 게임</div>
+        <div class="project-meta"><span class="tag">#Unity</span><span class="tag">#Game</span><span class="project-period">2024. 09. ~ 2024. 12.</span></div>
+      </div>
+    </div>
+
+    <!-- 보담길 -->
+    <div class="project-card"
+      data-cats="backend,frontend"
+      data-title="보담길"
+      data-period="2023. 10. ~ 2023. 12."
+      data-team="2인 (BackEnd · FrontEnd(JS))"
+      data-stack="Node.js · JavaScript · AWS · Git"
+      data-github="https://github.com/pcy1203/bodamgil"
+      data-detail="<img src='./image/bodamgil.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>🌠 대학생이 되었지만, 여전히 나를 잘 모르겠어···<br/>└─▶ <strong>대학생을 위한 자아탐색 웹 사이트</strong>, 보담길 (보다 나은 너를 찾길)</p><h3>주요 기능</h3><ul><li><strong>메인 화면</strong> · <strong>로그인 및 회원가입</strong></li><li><strong>나 알아보기</strong> : 진로 게임을 통한 관심사와 성향 파악</li><li><strong>세상 알아보기</strong> : 커리어넷 API 기반 직업 목록 소개</li></ul><h3>역할</h3><ul><li><strong>백엔드 개발</strong> : Node.js 기반 서버 구축, CRUD API, 소셜 로그인(passport) · 메일 전송(nodemailer), 커리어넷 API</li><li><strong>프론트엔드 개발 일부(JS)</strong> : 카카오 API 활용 카카오톡 공유 기능, 이미지 미리보기 · 저장 · 링크 복사</li><li><strong>데이터베이스 설계 및 배포</strong></li></ul>">
+      <a class="project-gh-badge" href="https://github.com/pcy1203/bodamgil" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#ffb87a 0%,#e86820 100%);"><span class="thumb-emoji">🌠</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">보담길</div><button class="project-star-btn starred" title="별표 표시">★</button></div>
+        <div class="project-desc">대학생을 위한 자아탐색 웹 사이트</div>
+        <div class="project-meta"><span class="tag">#BackEnd</span><span class="tag">#FrontEnd</span><span class="tag">#Node.js</span><span class="project-period">2023. 10. ~ 2023. 12.</span></div>
+      </div>
+    </div>
+
+    <!-- 도와줘 코딩 -->
+    <div class="project-card"
+      data-cats="backend,hci"
+      data-title="도와줘, 코딩!"
+      data-period="2022. 01. ~ 2022. 03."
+      data-team="5인 (Planning · BackEnd)"
+      data-stack="Django · JavaScript · AWS · Git"
+      data-github="https://github.com/hongsy0113/Piro16_Help_Coding"
+      data-detail="<img src='./image/helpcoding.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>프로젝트 소개</h3><p>💻 개발자들은 질문이 생기면 StackOverflow가 있지만, 블록 코딩을 공부하는 어린 아이들은?<br/>└─▶ <strong>어린이를 위한 블록코딩 질의응답 웹 사이트</strong></p><h3>역할</h3><ul><li><strong>백엔드 개발 (User app)</strong> : 회원가입, 로그인, 업적 · 배지 획득 기능, 포인트 · 레벨 기능, 알림 기능</li><li><strong>기획</strong></li><li><strong>데이터베이스 설계</strong></li></ul>">
+      <a class="project-gh-badge" href="https://github.com/hongsy0113/Piro16_Help_Coding" target="_blank" rel="noopener" title="GitHub" onclick="event.stopPropagation()"><svg class="gh-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+      <div class="project-thumb" style="background:linear-gradient(140deg,#44cce0 0%,#1a96b5 100%);"><span class="thumb-emoji">💻</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">도와줘, 코딩!</div><button class="project-star-btn starred" title="별표 표시">★</button></div>
+        <div class="project-desc">어린이를 위한 블록코딩 질의응답 웹 사이트</div>
+        <div class="project-meta"><span class="tag">#BackEnd</span><span class="tag">#Django</span><span class="tag">#Planning</span><span class="project-period">2022. 01. ~ 2022. 03.</span></div>
+      </div>
+    </div>
+
+    <!-- HR 활동 -->
+    <div class="project-card"
+      data-cats="hr"
+      data-title="차세대 HR 아카데미"
+      data-period="2024. 03. ~ 2024. 12."
+      data-team="연합 HR 학회"
+      data-github=""
+      data-detail="<img src='./image/nexthracademy.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3>활동 소개</h3><p>🏢 미래의 HR 전문가를 꿈꾸는 사람들이 모인 연합 HR 학회<br/>└─▶ <strong>교육생 4개월, 예비 운영진 2개월, 운영진 4개월</strong> 활동</p><h3>주요 활동</h3><ul><li><strong>HR 교육 이수 및 진행</strong> : HR입문, 직무관리, 채용, 성과관리, 보상, 조직문화, 전략적 HRD, 교수설계, HRD평가, 노사노무</li><li><strong>HRM · HRD 프로젝트</strong> : HRM 프로젝트 2회, HRD 프로젝트 1회 (기업 내부 문제점을 발굴하여 HRM/HRD 솔루션 제안)</li><li><strong>HR 교육 프로그램</strong> : HR Bite (자유 주제 발표), 차클리핑 (HR 기사 스크랩), HR-flection (성장관리/회고 프로그램)</li></ul><h3>역할</h3><ul><li>[예비 운영진] <strong>채용 프로세스 기획 및 진행</strong> : 면접 문항 설계, 후보자 경험 개선</li><li>[인재개발팀장] <strong>학회 교육 프로그램 기획 및 운영</strong> : 교육 프로그램 요구 분석, 세션 커리큘럼 기획 (세션 전반 운영 및 일정 조정), HR 교육 · HR 세부 프로그램 · 온보딩 세션 프로그램 · HRD 프로젝트 · 성장관리 프로그램 기획 및 운영</li><li>[R&amp;R: CPR] <strong>학회 대내외 홍보 콘텐츠 제작 및 채용 브랜딩</strong> : 홍보 콘텐츠 제작, SNS 채널(인스타그램, 블로그, 카페, 카카오톡) 운영 및 문의 대응, ‘[차BTI] 나의 인재상 유형은?’ 웹 페이지 제작 및 배포</li><li>[R&amp;R: 조편성 &amp; 회의록] <strong>조편성 및 회의록 작성을 통한 학회 운영 지원</strong> : Python 기반 조편성 프로그램 제작, 회의록 작성</li></ul><h3>프로젝트 및 발제</h3><ul><li>교육생 HR Bite : <strong>HR이 주도하는 디지털 트랜스포메이션</strong></li><li>교육생 HRD 프로젝트 : <strong>카카오의 AI 사업 인재 육성을 위한 스킬 기반 교육</strong></li><li>운영진 HRM 프로젝트 : <strong>엔씨소프트의 대기발령 문제와 안전한 실패 프로세스 구축</strong></li><li>운영진 발제 : <strong>조직문화, HRD평가</strong> 주제 발제</li></ul><h3>성과</h3><ul><li>이전 기수 대비 지원자 수 20% 증가</li><li>신규 교육 프로그램 기획 및 정규 프로그램으로 정착 (차클리핑, 성장관리 프로그램)</li></ul>">
+      <div class="project-thumb" style="background:linear-gradient(140deg,#3a6fcc 0%,#2ea055 100%);"><span class="thumb-emoji">🏢</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">차세대 HR 아카데미</div><button class="project-star-btn starred" title="별표 표시">★</button></div>
+        <div class="project-desc">연합 HR 학회 : 운영진 인재개발팀장</div>
+        <div class="project-meta"><span class="tag">#HR</span><span class="tag">#Education</span><span class="project-period">2024. 03. ~ 12.</span></div>
+      </div>
+    </div>
+
+    <div class="project-card"
+      data-cats="hr"
+      data-title="꿈을꾸물"
+      data-period="2021. 09. ~ 2022. 02."
+      data-team="진로교육봉사 동아리"
+      data-github=""
+      data-detail="<img src='./image/dreammoving.png' style='width: 100%' /><div style='border-top: 1px dashed #ccd6e4'></div><h3><strong>활동 소개</strong></h3><p>학생들이 꿈을 향해 천천히 도약할 수 있도록 진로 프로그램을 기획하고 실행하는 연합 진로교육봉사 단체<br/>└─▶ <strong>교육봉사멘토 2회</strong> (2021. 02. &amp; 2021. 08.), <strong>운영진 교육팀장</strong> (2021. 09. ~ 2022. 02.)</p><h3><strong>역할</strong></h3><ul><li>[교육팀장] <strong>멘토링 수업 자료 아카이빙 및 개선</strong> : 멘토링 수업 자료 아카이빙(네이버 블로그 ‘진로위키’ 업로드), 기존 멘토링 수업 자료 개선</li><li>[교육팀장] <strong>멘토 선발 및 관리</strong> : 멘토 선발, 굿네이버스·달꿈과 협업하여 출강 요청 시 멘토 인원 배정, 출강 전 멘토링 자료 제작·전달, 멘토 테스트 진행</li><li>[교육팀장] <strong>멘토링 워크샵 기획 및 진행</strong> : 워크샵 전체 기획 및 진행, 워크샵 팀장 매뉴얼 작성·전달, 워크샵 피드백 수합, 멘토링 자료 제작·전달</li><li>[멘토] <strong>고등학생 대상 진로 수업 기획 및 진행</strong></li></ul><h3><strong>수업 기획 및 진행</strong></h3><ul><li><strong>2021년 2월 옥과고등학교</strong> : ‘고정관념 팡팡’ (진로 설정에 대한 고정관념을 깨뜨리고 자신에 대한 다각적인 이해를 돕는 수업)</li><li><strong>2021년 8월 진주외국어고등학교</strong> : ‘나만의 진로 다방 만들기’ (다양한 특성을 지닌 ‘나’를 이해하고 미래를 주체적으로 계획해보는 수업)</li></ul>">
+      <div class="project-thumb" style="background:linear-gradient(140deg,#b3ff8f 0%,#5ee842 100%);"><span class="thumb-emoji">🌱</span></div>
+      <div class="project-body">
+        <div class="project-title-row"><div class="project-title">꿈을꾸물</div><button class="project-star-btn starred" title="별표 표시">★</button></div>
+        <div class="project-desc">진로교육봉사 동아리 : 운영진 교육팀장</div>
+        <div class="project-meta"><span class="tag">#Education</span><span class="tag">#HR</span><span class="project-period">2021. 09. ~ 2022. 02.</span></div>
+      </div>
+    </div>
+
+  </div><!-- /project-list -->
+</div>
+
+
+<!-- ══════ STUDY ══════ -->
+<div id="tab-study" class="tab-panel">
+
+  <!-- ① Awards -->
+  <div class="section-block">
+    <div class="section-heading"><h2>🏆 Awards</h2></div>
+    <div class="award-list">
+      <div class="award-item">
+        <div><div class="award-name">제1회 서울대학교 생성형 AI 경진대회 최우수상 (서울대학교 총장상)</div><div class="award-org">스누지니어스 (초개인화 졸업 사정 및 규정 검색 서비스)</div></div>
+        <div class="award-date">2025. 12. 22.</div>
+      </div>
+      <div class="award-item">
+        <div><div class="award-name">2025 DATA VENTURE 문제해결 챌린지 FLEX 과제 최우수상 &amp; 한국연구재단이사장상</div><div class="award-org">FitConnect (구직자 · 기업 AI 인터뷰로 '딱 맞는 매칭'을 제공하는 채용 플랫폼)</div></div>
+        <div class="award-date">2025. 11. 30.</div>
+      </div>
+      <div class="award-item">
+        <div><div class="award-name">2021 안산을 이야기해줘! 안산스토리 영상 시놉시스 공모전 TV광고 부문 우수상</div></div>
+        <div class="award-date">2021. 05. 06.</div>
+      </div>
+      <div class="award-item">
+        <div><div class="award-name">안양시장 표창장</div></div>
+        <div class="award-date">2020. 02. 07.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② Certifications -->
+  <div class="section-block">
+    <div class="section-heading"><h2>🏅 Certifications</h2></div>
+    <div class="cert-grid">
+      <div class="cert-item"><div><div class="cert-name">SQL 개발자(SQLD)</div><div class="cert-org">재단법인 한국데이터산업진흥원</div></div><div class="cert-date">2025. 04. 04.</div></div>
+      <div class="cert-item"><div><div class="cert-name">직업상담사 2급</div><div class="cert-org">한국산업인력공단</div></div><div class="cert-date">2023. 09. 01.</div></div>
+      <div class="cert-item"><div><div class="cert-name">정보처리산업기사</div><div class="cert-org">한국산업인력공단</div></div><div class="cert-date">2023. 06. 16.</div></div>
+      <div class="cert-item"><div><div class="cert-name">웹디자인기능사</div><div class="cert-org">한국산업인력공단</div></div><div class="cert-date">2022. 12. 02.</div></div>
+      <div class="cert-item"><div><div class="cert-name">데이터분석준전문가(ADsP)</div><div class="cert-org">재단법인 한국데이터산업진흥원</div></div><div class="cert-date">2022. 11. 25.</div></div>
+      <div class="cert-item"><div><div class="cert-name">HRM 전문가</div><div class="cert-org">한국공인노무사회</div></div><div class="cert-date">2022. 11. 25.</div></div>
+      <div class="cert-item"><div><div class="cert-name">컴퓨터활용능력 1급</div><div class="cert-org">대한상공회의소</div></div><div class="cert-date">2022. 03. 18.</div></div>
+      <div class="cert-item"><div><div class="cert-name">워드프로세서</div><div class="cert-org">대한상공회의소</div></div><div class="cert-date">2022. 03. 11.</div></div>
+      <div class="cert-item"><div><div class="cert-name">정보처리기능사</div><div class="cert-org">한국산업인력공단</div></div><div class="cert-date">2021. 12. 31.</div></div>
+    </div>
+  </div>
+
+  <!-- ③ Study — 2열 -->
+  <div class="section-block">
+    <div class="section-heading"><h2>📒 Study</h2></div>
+    <div class="study-grid">
+      <div class="study-card">
+        <div class="study-card-title">OUTTA AI 부트캠프</div>
+        <div class="study-card-org">2024. 07. ~ 08.</div>
+        <div class="study-card-tags"><span class="tag">딥러닝 Advanced반</span></div>
+      </div>
+      <div class="study-card">
+        <div class="study-card-title">군 장병 AI·SW 역량강화 교육 (엘리스 · 카카오)</div>
+        <div class="study-card-org">2023</div>
+        <div class="study-card-tags"><span class="tag">웹 개발 고급</span><span class="tag">인공지능 고급(자연어 처리)</span><span class="tag">인공지능 고급(이미지 처리)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ Enrolled Courses -->
+  <div class="section-block">
+    <div class="section-heading"><h2>🏫 Enrolled Courses</h2></div>
+    <div class="filter-bar" id="courseFilter">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="ling">언어학</button>
+      <button class="filter-btn" data-filter="cse">컴퓨터공학</button>
+      <button class="filter-btn" data-filter="edu">교육프로그램설계공학</button>
+      <button class="filter-btn" data-filter="free">자유전공</button>
+      <button class="filter-btn" data-filter="gyo">교양</button>
+    </div>
+    <div class="course-wrap">
+      <table class="course-table" id="courseTable">
+        <thead><tr><th style="width:28px"></th><th>과목명</th><th>개설 학과</th><th>전공 구분</th><th>수강 학기</th><th>학점</th></tr></thead>
+        <tbody id="courseTbody"></tbody>
+      </table>
+    </div>
+    <div class="gpa-bar">
+      <span>4학년 1학기 수료 · 4학년 2학기 <strong>재학</strong></span>
+      <span class="gpa-sep">|</span>
+      <span>취득 학점 <strong>157학점</strong> (전공 <strong>106학점</strong>) · 18학점 수강 중</span>
+      <span class="gpa-sep">|</span>
+      <span>평점 평균 <strong>4.04</strong> / 4.3</span>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="닫기">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
-    const changeZoom = () => {
-        document.body.style.zoom = `${window.innerHeight / 640 * 100}%`;
+/* ─── DATA ─── */
+const COURSES=[
+  {star:false,name:"언어와 언어학",dept:"언어학과",cat:"ling",sem:"2학년 1학기",grade:"A+"},
+  {star:false,name:"언어학사",dept:"언어학과",cat:"ling",sem:"2학년 1학기",grade:"A+"},
+  {star:false,name:"언어와 컴퓨터",dept:"언어학과",cat:"ling",sem:"2학년 2학기",grade:"A+"},
+  {star:true,name:"통사론",dept:"언어학과",cat:"ling",sem:"2학년 2학기",grade:"A0"},
+  {star:true,name:"말소리의 세계",dept:"언어학과",cat:"ling",sem:"3학년 1학기",grade:"A0"},
+  {star:false,name:"형태론",dept:"언어학과",cat:"ling",sem:"3학년 1학기",grade:"A+"},
+  {star:false,name:"언어장애 및 치료",dept:"언어학과",cat:"ling",sem:"3학년 1학기",grade:"A+"},
+  {star:false,name:"실험언어학",dept:"언어학과",cat:"ling",sem:"3학년 2학기",grade:"A+"},
+  {star:true,name:"역사비교언어학",dept:"언어학과",cat:"ling",sem:"3학년 2학기",grade:"A0"},
+  {star:true,name:"컴퓨터언어학",dept:"언어학과",cat:"ling",sem:"4학년 1학기",grade:"A+"},
+  {star:false,name:"심리언어학",dept:"언어학과",cat:"ling",sem:"4학년 1학기",grade:"A+"},
+  {star:false,name:"심화통사론",dept:"언어학과",cat:"ling",sem:"4학년 1학기",grade:"A+"},
+  {star:false,name:"언어학연습 1",dept:"언어학과",cat:"ling",sem:"4학년 2학기",grade:"수강중"},
+  {star:true,name:"이산수학",dept:"컴퓨터공학부",cat:"cse",sem:"2학년 1학기",grade:"A+"},
+  {star:true,name:"논리설계",dept:"컴퓨터공학부",cat:"cse",sem:"2학년 1학기",grade:"A0"},
+  {star:true,name:"컴퓨터구조",dept:"컴퓨터공학부",cat:"cse",sem:"2학년 2학기",grade:"A0"},
+  {star:true,name:"컴퓨터프로그래밍",dept:"컴퓨터공학부",cat:"cse",sem:"2학년 2학기",grade:"A-"},
+  {star:true,name:"자료구조",dept:"컴퓨터공학부",cat:"cse",sem:"2학년 2학기",grade:"A-"},
+  {star:false,name:"컴퓨터공학세미나",dept:"컴퓨터공학부",cat:"cse",sem:"2학년 2학기",grade:"S"},
+  {star:false,name:"선형대수학",dept:"수리과학부",cat:"cse",sem:"2학년 겨울",grade:"A0"},
+  {star:true,name:"알고리즘",dept:"컴퓨터공학부",cat:"cse",sem:"3학년 1학기",grade:"A0"},
+  {star:true,name:"시스템프로그래밍",dept:"컴퓨터공학부",cat:"cse",sem:"3학년 1학기",grade:"A-"},
+  {star:false,name:"현대암호학개론",dept:"컴퓨터공학부",cat:"cse",sem:"3학년 2학기",grade:"B0"},
+  {star:false,name:"소프트웨어 개발의 원리와 실습",dept:"컴퓨터공학부",cat:"cse",sem:"3학년 2학기",grade:"B0"},
+  {star:false,name:"VR/AR의 개론 및 실습",dept:"공과대학",cat:"cse",sem:"3학년 2학기",grade:"A+"},
+  {star:false,name:"컴퓨터네트워크",dept:"컴퓨터공학부",cat:"cse",sem:"4학년 1학기",grade:"A-"},
+  {star:false,name:"운영체제",dept:"컴퓨터공학부",cat:"cse",sem:"4학년 2학기",grade:"수강중"},
+  {star:false,name:"모바일 컴퓨팅과 응용",dept:"컴퓨터공학부",cat:"cse",sem:"4학년 2학기",grade:"수강중"},
+  {star:true,name:"교육학개론",dept:"교육학과",cat:"edu",sem:"2학년 1학기",grade:"A+"},
+  {star:false,name:"청소년발달",dept:"아동가족학과",cat:"edu",sem:"2학년 1학기",grade:"A+"},
+  {star:true,name:"교육심리학",dept:"교육학과",cat:"edu",sem:"2학년 2학기",grade:"A+"},
+  {star:false,name:"HCI이론 및 실습",dept:"정보문화학과",cat:"edu",sem:"3학년 1학기",grade:"A+"},
+  {star:true,name:"수업설계와 교육공학",dept:"교육학과",cat:"edu",sem:"3학년 2학기",grade:"A+"},
+  {star:false,name:"디자인 사고와 커뮤니케이션",dept:"정보문화학과",cat:"edu",sem:"4학년 1학기",grade:"A-"},
+  {star:false,name:"이상심리학",dept:"심리학과",cat:"edu",sem:"4학년 1학기",grade:"A0"},
+  {star:false,name:"자율연구 1",dept:"자유전공학부",cat:"edu",sem:"4학년 2학기",grade:"수강중"},
+  {star:false,name:"교육평가",dept:"교육학과",cat:"edu",sem:"4학년 2학기",grade:"수강중"},
+  {star:false,name:"산업인력조직개발론",dept:"산업인력개발학과",cat:"edu",sem:"4학년 2학기",grade:"수강중"},
+  {star:true,name:"주제탐구세미나 1",dept:"자유전공학부",cat:"free",sem:"1학년 1학기",grade:"A-"},
+  {star:true,name:"전공설계 1",dept:"자유전공학부",cat:"free",sem:"1학년 1학기",grade:"S"},
+  {star:false,name:"주제탐구세미나 2",dept:"자유전공학부",cat:"free",sem:"1학년 2학기",grade:"B+"},
+  {star:false,name:"전공설계 2",dept:"자유전공학부",cat:"free",sem:"1학년 2학기",grade:"S"},
+  {star:false,name:"주제탐구세미나 4",dept:"자유전공학부",cat:"free",sem:"1학년 겨울",grade:"A0"},
+  {star:false,name:"고전탐구세미나 2",dept:"자유전공학부",cat:"free",sem:"4학년 1학기",grade:"A0"},
+  {star:false,name:"대학 글쓰기 1",dept:"교양",cat:"gyo",sem:"1학년 1학기",grade:"A+"},
+  {star:false,name:"수학의 기초와 응용 1",dept:"교양",cat:"gyo",sem:"1학년 1학기",grade:"A+"},
+  {star:false,name:"통계학",dept:"교양",cat:"gyo",sem:"1학년 1학기",grade:"A0"},
+  {star:false,name:"통계학실험",dept:"교양",cat:"gyo",sem:"1학년 1학기",grade:"A+"},
+  {star:false,name:"중급중국어 1",dept:"교양",cat:"gyo",sem:"1학년 1학기",grade:"A+"},
+  {star:false,name:"삶과 교육",dept:"교양",cat:"gyo",sem:"1학년 1학기",grade:"A+"},
+  {star:false,name:"수학 1",dept:"교양",cat:"gyo",sem:"1학년 여름",grade:"A0"},
+  {star:false,name:"수학연습 1",dept:"교양",cat:"gyo",sem:"1학년 여름",grade:"A+"},
+  {star:false,name:"대학 글쓰기 2 : 과학기술글쓰기",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"A+"},
+  {star:false,name:"고급영어: 발표",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"A+"},
+  {star:false,name:"인문사회계를 위한 물리학",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"A0"},
+  {star:false,name:"언어의 이해",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"A0"},
+  {star:false,name:"주권국가와 국제법원",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"A-"},
+  {star:false,name:"인터넷 보안과 프라이버시",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"A+"},
+  {star:false,name:"신입생세미나",dept:"교양",cat:"gyo",sem:"1학년 2학기",grade:"S"},
+  {star:false,name:"교과-소프트웨어 융합역량 교육론 I",dept:"교양",cat:"gyo",sem:"2학년 1학기",grade:"S"},
+  {star:false,name:"이태리어 1",dept:"교양",cat:"gyo",sem:"2학년 여름",grade:"A+"},
+  {star:false,name:"사회봉사 1",dept:"교양",cat:"gyo",sem:"2학년 여름",grade:"S"},
+  {star:false,name:"소그룹 고전원전읽기 1",dept:"교양",cat:"gyo",sem:"2학년 2학기",grade:"S"},
+  {star:false,name:"교양연주- 색소폰 1",dept:"교양",cat:"gyo",sem:"3학년 1학기",grade:"S"},
+  {star:false,name:"체력단련",dept:"교양",cat:"gyo",sem:"3학년 1학기",grade:"S"},
+];
+
+const BADGE={ling:['언어학','mb-ling'],cse:['컴퓨터공학','mb-cse'],edu:['교육프로그램설계공학','mb-edu'],free:['자유전공','mb-free'],gyo:['교양','mb-gyo']};
+function semOrder(sem){const[y,s]=sem.split('학년 ');const yr=parseInt(y)*(-10);const order={'1학기':4,'여름':3,'2학기':2,'겨울':1};return yr+(order[s&&s.trim()]??5);}
+
+function buildCourseTable(filterCat){
+  const tbody=document.getElementById('courseTbody');tbody.innerHTML='';
+  [...COURSES].sort((a,b)=>semOrder(a.sem)-semOrder(b.sem)).forEach(c=>{
+    if(filterCat!=='all'&&c.cat!==filterCat)return;
+    const[label,cls]=BADGE[c.cat]||['기타','mb-free'];
+    const tr=document.createElement('tr');tr.className='course-row';
+    tr.innerHTML=`<td style="text-align:center">${c.star?'<span class="star-badge">★</span>':''}</td><td style="font-weight:700;color:var(--text-1)">${c.name}</td><td>${c.dept}</td><td><span class="mb ${cls}">${label}</span></td><td><span class="sem-tag">${c.sem}</span></td><td style="font-weight:700;color:var(--accent)">${c.grade}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+buildCourseTable('all');
+
+function buildMajorTable(cat,tableId){
+  const table=document.getElementById(tableId);if(!table)return;
+  table.innerHTML=`<thead><tr><th style="width:24px"></th><th>과목명</th><th>개설 학과</th><th>수강 학기</th><th>학점</th></tr></thead>`;
+  const tbody=document.createElement('tbody');
+  COURSES.filter(c=>c.cat===cat).sort((a,b)=>semOrder(a.sem)-semOrder(b.sem)).forEach(c=>{
+    const tr=document.createElement('tr');
+    tr.style.borderBottom='1px solid var(--border)';
+    tr.innerHTML=`<td style="text-align:center;padding:9px 12px">${c.star?'<span class="star-badge">★</span>':''}</td><td style="padding:9px 12px;font-weight:600;color:var(--text-1)">${c.name}</td><td style="padding:9px 12px;color:var(--text-3);font-size:.82rem">${c.dept}</td><td style="padding:9px 12px"><span class="sem-tag">${c.sem}</span></td><td style="padding:9px 12px;font-weight:700;color:var(--accent)">${c.grade}</td>`;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+}
+buildMajorTable('ling','mct-ling');
+buildMajorTable('cse','mct-cse');
+buildMajorTable('edu','mct-edu');
+
+/* ─── TAB NAVIGATION ─── */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ─── MAJOR TABS ─── */
+document.querySelectorAll('.major-tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.major-tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.major-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('major-'+btn.dataset.major).classList.add('active');
+  });
+});
+
+/* ─── MAJOR SUB-TABS ─── */
+document.querySelectorAll('.major-subtab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const panel=btn.closest('.major-panel');
+    panel.querySelectorAll('.major-subtab-btn').forEach(b=>b.classList.remove('active'));
+    panel.querySelectorAll('.major-subpanel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    const target=panel.querySelector('#'+btn.dataset.subpanel);
+    if(target)target.classList.add('active');
+  });
+});
+
+/* ─── PROJECT SORT by date (newest first) ─── */
+(function(){
+  const list=document.getElementById('projectList');
+  const cards=[...list.querySelectorAll('.project-card')];
+  function parseDate(s){
+    // take the last date in "YYYY. MM. ~ YYYY. MM." or just "YYYY. MM."
+    const matches=[...s.matchAll(/(\d{4})\.\s*(\d{1,2})/g)];
+    if(!matches.length)return 0;
+    const last=matches[matches.length-1];
+    return parseInt(last[1])*100+parseInt(last[2]);
+  }
+  cards.sort((a,b)=>parseDate(b.dataset.period||'')-parseDate(a.dataset.period||''));
+  cards.forEach(c=>list.appendChild(c));
+})();
+
+/* ─── PROJECT FILTER (multi-cat) ─── */
+document.getElementById('projectFilter').addEventListener('click',e=>{
+  const btn=e.target.closest('.filter-btn');if(!btn)return;
+  document.querySelectorAll('#projectFilter .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.filter;
+  document.querySelectorAll('#projectList .project-card').forEach(card=>{
+    const cats=(card.dataset.cats||'').split(',').map(s=>s.trim());
+    card.style.display=(f==='all'||cats.includes(f))?'grid':'none';
+  });
+});
+
+/* ─── COURSE FILTER ─── */
+document.getElementById('courseFilter').addEventListener('click',e=>{
+  const btn=e.target.closest('.filter-btn');if(!btn)return;
+  document.querySelectorAll('#courseFilter .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildCourseTable(btn.dataset.filter);
+});
+
+/* ─── THEME ─── */
+const html=document.documentElement;const themeBtn=document.getElementById('themeBtn');
+const saved=localStorage.getItem('pf-theme')||'light';
+html.setAttribute('data-theme',saved);
+themeBtn.textContent=saved==='dark'?'☀️ Light':'🌙 Dark';
+themeBtn.addEventListener('click',()=>{
+  const next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  html.setAttribute('data-theme',next);
+  themeBtn.textContent=next==='dark'?'☀️ Light':'🌙 Dark';
+  localStorage.setItem('pf-theme',next);
+});
+
+/* ─── PROJECT STAR ─── */
+function toggleProjectStar(btn){
+  btn.classList.toggle('starred');
+}
+
+/* ─── MODAL ─── */
+const overlay=document.getElementById('modal');
+const modalTitle=document.getElementById('modalTitle');
+const modalMeta=document.getElementById('modalMeta');
+const modalBody=document.getElementById('modalBody');
+
+function openModal(title,meta,detail,extra){
+  modalTitle.textContent=title;
+  modalMeta.innerHTML=meta||'';
+  let imgsHtml='';
+  if(extra&&extra.imgs&&extra.imgs.length){
+    imgsHtml='<div class="modal-img-row">'+extra.imgs.map(src=>`<img src="${src}" alt="" loading="lazy">`).join('')+'</div>';
+  }
+  let footerHtml='';
+  if(extra&&extra.link){
+    footerHtml=`<div class="modal-body-footer"><a href="${extra.link}" target="_blank" rel="noopener">🔗 Link ↗</a></div>`;
+  }
+  modalBody.innerHTML=imgsHtml+(detail||'<p>세부 내용이 없습니다.</p>')+footerHtml;
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){overlay.classList.remove('open');document.body.style.overflow='';}
+
+/* Project card click */
+document.querySelectorAll('.project-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const meta=[
+      card.dataset.period&&`📅 ${card.dataset.period}`,
+      card.dataset.team&&`👥 ${card.dataset.team}`,
+      card.dataset.stack&&`🛠 ${card.dataset.stack}`
+    ].filter(Boolean).map(s=>`<span>${s}</span>`).join('');
+    const imgs=card.dataset.imgs?card.dataset.imgs.split(',').map(s=>s.trim()).filter(Boolean):[];
+    const link=card.dataset.github||'';
+    openModal(card.dataset.title,meta,card.dataset.detail,{imgs,link:link||null});
+  });
+});
+
+/* Timeline detail btn */
+document.querySelectorAll('.tl-detail-btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    openModal(btn.dataset.title,btn.dataset.meta,btn.dataset.detail,null);
+  });
+});
+
+document.getElementById('modalClose').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* ─── BUBBLES ─── */
+(function(){
+  const container=document.getElementById('bubbles');const COUNT=10;
+  function spawnParticles(x,y,size){
+    const colors=['rgba(255,180,220,.75)','rgba(160,210,255,.75)','rgba(220,180,255,.75)','rgba(255,255,200,.75)','rgba(180,255,220,.75)'];
+    const n=8+Math.floor(Math.random()*6);
+    for(let i=0;i<n;i++){
+      const p=document.createElement('div');p.className='pop-particle';
+      const pSize=3+Math.random()*(size*0.18);
+      const angle=(i/n)*Math.PI*2+Math.random()*0.5;
+      const dist=size*0.6+Math.random()*size*0.5;
+      const dx=Math.cos(angle)*dist;const dy=Math.sin(angle)*dist;
+      const color=colors[Math.floor(Math.random()*colors.length)];
+      p.style.cssText=`width:${pSize}px;height:${pSize}px;left:${x-pSize/2}px;top:${y-pSize/2}px;background:${color};--dx:${dx}px;--dy:${dy}px;animation-duration:${0.35+Math.random()*0.25}s;`;
+      container.appendChild(p);setTimeout(()=>p.remove(),700);
     }
-    changeZoom();
-    window.addEventListener('resize', changeZoom);
-
-    let currentQuestion = 0;
-
-    const questionList = ["Q. 두근두근 차세대에서의 HR 교육!<br />내가 더 기대하는 세션은?",
-                    "Q. 많은 HRer들을 만날 수 있다니!<br />내가 더 관심있는 네트워킹은?",
-                    "Q. 준비한 프로젝트가 끝났다.<br />나에게 가장 보람찼던 부분은?",
-                    "Q. 차세대... 이런 점이 <br />가장 매력적인 것 같은데?",
-                    "Q. 내가 36기 차둥이가 된다면,<br />이것만큼은 자신 있다!"];
-    const answer1List = ["채용, 성과관리, 조직문화 등의 HRM 세션",
-                   "현업의 이야기를 들을 수 있는 OB네트워킹",
-                   "어렵더라도 배워나가며 문제를 해결하니 즐거워!",
-                   "HR의 탄탄한 기본기와 HRer로서의 가치관 다지기",
-                   "책임감을 갖고 프로젝트를 완수시키는 리더"];
-    const answer2List = ["교수설계, 교육평가 등의 HRD 세션",
-                   "차둥이들과 더 친해질 수 있는 YB네트워킹",
-                   "최선의 결과물을 위해 끝까지 해내다니 보람차!",
-                   "HR을 꿈꾸고 함께 실현해나가는 끈끈한 동료들",
-                   "적극적으로 의견을 내고 배우려는 아이디어 뱅크"];
-    const answer3List = ["",
-                   "",
-                   "팀원들과 함께 협력해서 시너지를 내니 짜릿해!",
-                   "내 손으로 조직 기획부터 운영까지 도전하는 경험",
-                   "사람들과 활발하게 협력하는 분위기 메이커"];
-    const answerList = [answer1List, answer2List, answer3List];
-    const resultList = ["💙 맡은 일을 누구보다 성실하게 수행하려고 해요.<br />💙 내가 속한 조직에 강한 애정을 가지고 있어요.<br />💙 어떤 활동이든 적극적으로 참여할 의지가 있어요.<br /><br />☑️ 차세대의 OB네트워킹 및 운영진 활동을 추천해요.<br /><a href='https://m.blog.naver.com/PostView.naver?blogId=next_hr_academy&logNo=223524469649&categoryNo=18&parentCategoryNo=&from=thumbnailList' class='recommend-link'>　OB 네트워킹 자세히 알아보기　</a><br /><br /><span class='highlight'>📢 36기 인재상에 부합하는 당신,<br />차세대 HR 아카데미와 함께 해보는 건 어떠신가요?</span>",
-                   "💙 HR에 관심이 많아서 배우고 싶은 게 많아요.<br />💙 새로운 지식과 인사이트를 알아가는 건 흥미로워요.<br />💙 누구보다 열정적인 자세로 배움에 임할 수 있어요.<br /><br />☑️ 차세대의 HR 교육 및 HR Bite를 추천해요.<br /><a href='https://m.blog.naver.com/PostView.naver?blogId=next_hr_academy&logNo=223524467762&categoryNo=18&parentCategoryNo=&from=thumbnailList' class='recommend-link'>　HR 교육 자세히 알아보기　</a><br /><br /><span class='highlight'>📢 36기 인재상에 부합하는 당신,<br />차세대 HR 아카데미와 함께 해보는 건 어떠신가요?</span>",
-                   "💙 사람들과 소통하고 협동하는 일을 좋아해요.<br />💙 늘 최선의 결과를 함께 만들기 위해 노력해요.<br />💙 다른 사람의 의견에 언제나 귀 기울이는 편이에요.<br /><br />☑️ 차세대의 프로젝트 및 YB네트워킹을 추천해요.<br /><a href='https://m.blog.naver.com/PostView.naver?blogId=next_hr_academy&logNo=223524468371&categoryNo=18&parentCategoryNo=&from=thumbnailList' class='recommend-link'>　HRM/HRD 프로젝트 자세히 알아보기　</a><br /><br /><span class='highlight'>📢 36기 인재상에 부합하는 당신,<br />차세대 HR 아카데미와 함께 해보는 건 어떠신가요?</span>"];
-
-    let MY_TYPE = 0;
-    let temp_TYPE = 0;
-
-    const TYPE_IMMERSION = 0;
-    const TYPE_GROWTH = 1;
-    const TYPE_COOPERATION = 2;
-    const typeList = ["몰입", "성장", "협업"];
-    const iconList = ["🔥", "🎁", "🙌"]
-    const result_type = [];
-
-    const addResult = (question, answer) => {
-        if (question == 1 && answer == 1) temp_TYPE = TYPE_GROWTH;
-        if (question == 1 && answer == 2) temp_TYPE = TYPE_COOPERATION;
-        if (question == 2 && answer == 1) result_type.push(TYPE_GROWTH);
-        if (question == 2 && answer == 2) result_type.push(TYPE_IMMERSION);
-        if (question == 2 && answer == 3) result_type.push(TYPE_COOPERATION);
-        if (question == 3 && answer == 1) result_type.push(TYPE_GROWTH);
-        if (question == 3 && answer == 2) result_type.push(TYPE_COOPERATION);
-        if (question == 3 && answer == 3) result_type.push(TYPE_IMMERSION);
-        if (question == 4 && answer == 1) result_type.push(TYPE_IMMERSION);
-        if (question == 4 && answer == 2) result_type.push(TYPE_GROWTH);
-        if (question == 4 && answer == 3) result_type.push(TYPE_COOPERATION);
-    }
-
-    const findType = () => {
-        const immersion = result_type.filter((t) => t == TYPE_IMMERSION).length;
-        const growth = result_type.filter((t) => t == TYPE_GROWTH).length;
-        const cooperation = result_type.filter((t) => t == TYPE_COOPERATION).length;
-        if (immersion > growth && immersion > cooperation) MY_TYPE = TYPE_IMMERSION;
-        if (growth > immersion && growth > cooperation) MY_TYPE = TYPE_GROWTH;
-        if (cooperation > immersion && cooperation > growth) MY_TYPE = TYPE_COOPERATION;
-        if (growth == immersion) MY_TYPE = temp_TYPE;
-    }
-
-    const changePage = async (e) => {
-        addResult(currentQuestion, e.target.classList[1].split("-")[1]);
-
-        e.target.style.backgroundColor = "#ffe785";
-        e.target.style.fontWeight = "600";
-
-        setTimeout(function() {
-            e.target.style.backgroundColor = "#ffffff";
-            e.target.style.fontWeight = "500";
-            currentQuestion++;
-            document.querySelector('.bar-progress').style.width = `${10 + 24 * currentQuestion}px`;
-            if (currentQuestion == 5) {
-                findType();
-                document.querySelector('.question p').style.display = 'none';
-                document.querySelector('.answer-1').style.display = 'none';
-                document.querySelector('.answer-2').style.display = 'none';
-                document.querySelector('.answer-3').style.display = 'none';
-                document.querySelector('.loading-page').style.display = 'block';
-
-                setTimeout(function() {
-                    document.querySelector('.loading-page').style.display = 'none';
-                    document.querySelector('.question p').style.display = 'block';
-                    document.querySelector('.question p').innerHTML = `당신은 <span style="font-weight: 600; color: #ffe785;">${typeList[MY_TYPE]}</span>형 인재입니다.<br /><span style="font-size: 35px; line-height: 50px;">${iconList[MY_TYPE]}</span>`;
-                    document.querySelector('.result').style.display = 'block';
-                    document.querySelector('.result').innerHTML = resultList[MY_TYPE];
-                }, 1200);
-
-            } else {
-                document.querySelector('.question p').innerHTML = questionList[currentQuestion];
-                document.querySelector('.answer-1').innerHTML = answer1List[currentQuestion];
-                document.querySelector('.answer-2').innerHTML = answer2List[currentQuestion];
-                if (currentQuestion >= 2) {
-                    document.querySelector('.question-page').style.top = '0px';
-                    document.querySelector('.answer-3').style.display = 'block';
-                    document.querySelector('.answer-3').innerHTML = answer3List[currentQuestion];
-                }
-            }
-        }, 100);
-    };
-
-    // Description Page -> Question Page
-    document.querySelector('.start').addEventListener('click', (e) => {
-        e.target.style.backgroundColor = "#ffe785";
-        e.target.style.fontWeight = "600";
-        setTimeout(function() {
-            document.querySelector('.first-page').style.display = 'none';
-            document.querySelector('.question-page').style.display = 'block';
-        }, 100);
+  }
+  function makeBubble(){
+    const b=document.createElement('div');b.className='bubble';
+    const size=22+Math.random()*52;const duration=22+Math.random()*28;const delay=Math.random()*18;
+    b.style.cssText=`width:${size}px;height:${size}px;left:${5+Math.random()*90}%;bottom:-90px;animation-duration:${duration}s;animation-delay:${delay}s;opacity:0;`;
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(b.classList.contains('popping'))return;
+      const rect=b.getBoundingClientRect();const containerRect=container.getBoundingClientRect();
+      const cx=rect.left+rect.width/2-containerRect.left;const cy=rect.top+rect.height/2-containerRect.top;
+      b.classList.add('popping');spawnParticles(cx,cy,size);
+      setTimeout(()=>{b.remove();setTimeout(makeBubble,1500+Math.random()*3500);},300);
     });
-
-    document.querySelectorAll('.answer').forEach((button) => {
-        button.addEventListener('click', changePage);
-    });
-
-    document.querySelector('.register-1').addEventListener('click', (e) => {
-        document.querySelector('.black-container').style.display = 'block';
-    });
-    document.querySelector('.close').addEventListener('click', (e) => {
-        document.querySelector('.black-container').style.display = 'none';
-    });
-    
-    Kakao.init('bf0f27bb133592d8ee9cbc2e482289f4');
-    document.querySelector('#kakao-link-btn').addEventListener('click', (e) => {
-        console.log(1);
-        e.preventDefault();
-        Kakao.Link.sendCustom({
-            templateId : 110637
-        });
-    });
+    container.appendChild(b);
+  }
+  for(let i=0;i<COUNT;i++)makeBubble();
+})();
 </script>
+</body>
 </html>
